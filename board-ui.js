@@ -427,23 +427,38 @@ class ChessboardUI {
     this.updateSquareStyles();
   }
 
-  attemptMove(fromSq, toSq) {
+  attemptMove(fromSq, toSq, promoChoice = null) {
     if (!this.engine) return false;
 
     const legal = this.engine.getLegalMoves(fromSq);
-    const valid = legal.find(m => m.to === toSq);
+    const validMoves = legal.filter(m => m.to === toSq);
+    if (validMoves.length === 0) return false;
+
+    // Check if it's a promotion move
+    const isPromotion = validMoves.some(m => m.promotion);
+
+    if (isPromotion && !promoChoice) {
+      this.showPromotionDialog(fromSq, toSq);
+      // Return true to pretend it's handled (so it doesn't clear selection or flash)
+      return true; 
+    }
+
+    const valid = isPromotion 
+      ? validMoves.find(m => (m.promotion || '').toUpperCase() === promoChoice.toUpperCase())
+      : validMoves[0];
+
     if (!valid) return false;
 
     // Check if move is handled by callback
     if (this.options.onMove) {
-      const handled = this.options.onMove({ from: fromSq, to: toSq, moveObj: valid });
+      const handled = this.options.onMove({ from: fromSq, to: toSq, promotion: promoChoice, moveObj: valid });
       if (handled === false) {
         this.clearSelection();
         return false;
       }
     }
 
-    const moveRecord = this.engine.makeMove({ from: fromSq, to: toSq });
+    const moveRecord = this.engine.makeMove({ from: fromSq, to: toSq, promotion: promoChoice });
     if (!moveRecord) return false;
 
     // Play sounds
@@ -459,6 +474,85 @@ class ChessboardUI {
     this.clearSelection();
     this.render();
     return true;
+  }
+
+  showPromotionDialog(fromSq, toSq) {
+    let dialog = this.container.querySelector('#promo-dialog');
+    if (!dialog) {
+      dialog = document.createElement('div');
+      dialog.id = 'promo-dialog';
+      dialog.style.position = 'absolute';
+      dialog.style.zIndex = '1000';
+      dialog.style.background = 'rgba(255,255,255,0.95)';
+      dialog.style.border = '2px solid #ccc';
+      dialog.style.borderRadius = '8px';
+      dialog.style.padding = '10px';
+      dialog.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+      dialog.style.display = 'flex';
+      dialog.style.flexDirection = 'column';
+      dialog.style.gap = '5px';
+      
+      this.container.style.position = 'relative'; // ensure wrapper is relative
+      this.container.appendChild(dialog);
+    }
+
+    dialog.innerHTML = '';
+    dialog.style.display = 'flex';
+
+    const color = this.engine.turn;
+    const pieces = color === 'w' ? ['Q', 'R', 'B', 'N'] : ['q', 'r', 'b', 'n'];
+
+    dialog.style.top = '50%';
+    dialog.style.left = '50%';
+    dialog.style.transform = 'translate(-50%, -50%)';
+
+    const title = document.createElement('div');
+    title.textContent = 'Elige coronación:';
+    title.style.fontWeight = 'bold';
+    title.style.textAlign = 'center';
+    title.style.marginBottom = '5px';
+    title.style.color = '#333';
+    dialog.appendChild(title);
+
+    const piecesRow = document.createElement('div');
+    piecesRow.style.display = 'flex';
+    piecesRow.style.gap = '10px';
+    dialog.appendChild(piecesRow);
+
+    pieces.forEach(p => {
+      const btn = document.createElement('div');
+      btn.className = `board-piece piece-${p}`;
+      btn.style.width = '60px';
+      btn.style.height = '60px';
+      btn.style.cursor = 'pointer';
+      btn.style.position = 'relative';
+      if (typeof renderPieceSvg !== 'undefined') btn.innerHTML = renderPieceSvg(p);
+      
+      // On click, execute move with this promotion choice
+      btn.onclick = (e) => {
+        e.stopPropagation(); // prevent triggering other clicks
+        dialog.style.display = 'none';
+        this.attemptMove(fromSq, toSq, p.toLowerCase());
+      };
+
+      piecesRow.appendChild(btn);
+    });
+    
+    // Add a cancel button
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Cancelar';
+    cancelBtn.style.marginTop = '10px';
+    cancelBtn.style.padding = '5px';
+    cancelBtn.style.cursor = 'pointer';
+    cancelBtn.style.color = '#333';
+    cancelBtn.style.border = '1px solid #ccc';
+    cancelBtn.style.borderRadius = '4px';
+    cancelBtn.onclick = (e) => {
+      e.stopPropagation();
+      dialog.style.display = 'none';
+      this.clearSelection();
+    };
+    dialog.appendChild(cancelBtn);
   }
 }
 
