@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrenador - Destruye el Doble Fianchetto</title>
+    <title>Destruye estas Aperturas</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chessboard.js CSS -->
@@ -11,6 +11,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .step-active { background-color: #eff6ff; border-left: 4px solid #3b82f6; }
+        .scenario-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -18,17 +19,25 @@
     <nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
         <h1 class="text-xl font-bold">Ajedrez Entrenador Personalizado</h1>
         <ul class="flex space-x-4">
-            <li><a href="#" class="hover:underline">Inicio</a></li>
-            <li><a href="#" class="font-bold underline">Destruye esta apertura</a></li>
-            <li><a href="#" class="hover:underline">Mis aperturas</a></li>
+            <li><a href="index.html" class="hover:underline">Inicio</a></li>
+            <li><a href="destruye_apertura.html" class="font-bold underline">Destruye estas aperturas</a></li>
         </ul>
     </nav>
 
-    <div class="max-w-6xl mx-auto p-6 mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="max-w-6xl mx-auto p-4 mt-4 flex gap-4 overflow-x-auto">
+        <button class="scenario-btn active px-4 py-2 bg-white border border-slate-300 rounded-lg shadow-sm hover:bg-slate-100 transition-colors font-semibold" data-scenario="fianchetto">
+            🔥 Destruye el Doble Fianchetto
+        </button>
+        <button class="scenario-btn px-4 py-2 bg-white border border-slate-300 rounded-lg shadow-sm hover:bg-slate-100 transition-colors font-semibold" data-scenario="londres">
+            ⚔️ Destruye el Sistema Londres
+        </button>
+    </div>
+
+    <div class="max-w-6xl mx-auto p-6 mt-2 grid grid-cols-1 md:grid-cols-2 gap-8">
         
         <!-- Tablero de Ajedrez -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col items-center">
-            <h2 class="text-2xl font-bold mb-4 text-center">Simulación: Ataque al Doble Fianchetto</h2>
+            <h2 id="scenario-title" class="text-2xl font-bold mb-4 text-center">Simulación: Ataque al Doble Fianchetto</h2>
             <div id="board" style="width: 100%; max-width: 400px;"></div>
             <div class="mt-6 flex space-x-4">
                 <button id="btnPrev" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-lg transition-colors font-semibold shadow-sm">
@@ -46,32 +55,7 @@
             <h3 class="text-xl font-bold mb-6 text-slate-800 border-b pb-2">Plan de Ataque Paso a Paso</h3>
             
             <div id="steps-container" class="space-y-4">
-                
-                <div class="p-4 rounded-lg transition-all step-card step-active" data-step="0">
-                    <h4 class="font-bold text-lg text-blue-700">1. La posición inicial</h4>
-                    <p class="text-slate-600 mt-1">Las negras plantean un esquema pasivo de "Doble Fianchetto" (b6, g6, Bb7, Bg7), cediendo el centro. Las blancas toman control con d4 y e4, y desarrollan piezas menores.</p>
-                </div>
-
-                <div class="p-4 rounded-lg transition-all step-card" data-step="1">
-                    <h4 class="font-bold text-lg text-blue-700">2. Batería (Qd2)</h4>
-                    <p class="text-slate-600 mt-1">Tu siguiente paso lógico es conectar la Dama con tu Alfil de casillas oscuras (Bg5) jugando <strong>Qd2</strong>. Esto prepara el terreno para eliminar a su mejor defensor.</p>
-                </div>
-
-                <div class="p-4 rounded-lg transition-all step-card" data-step="2">
-                    <h4 class="font-bold text-lg text-blue-700">3. Enroque Largo (O-O-O)</h4>
-                    <p class="text-slate-600 mt-1">Al enrocar en el flanco de dama (<strong>O-O-O</strong>), pones a tu Rey a salvo y traes tu Torre centralizando tus piezas pesadas.</p>
-                </div>
-
-                <div class="p-4 rounded-lg transition-all step-card" data-step="3">
-                    <h4 class="font-bold text-lg text-blue-700">4. Intercambia su defensor (Bh6)</h4>
-                    <p class="text-slate-600 mt-1">Una vez que las negras enroquen corto, juegas <strong>Bh6</strong> para obligar a cambiar su alfil de g7. Sin ese alfil, su flanco de rey quedará lleno de agujeros.</p>
-                </div>
-
-                <div class="p-4 rounded-lg transition-all step-card" data-step="4">
-                    <h4 class="font-bold text-lg text-blue-700">5. La Tormenta de Peones (h4-h5)</h4>
-                    <p class="text-slate-600 mt-1">Con el rey negro expuesto, lanzas <strong>h4 seguido de h5</strong> para abrir la columna "h". Tu Torre en h1 liderará un ataque devastador directo a su rey.</p>
-                </div>
-
+                <!-- Se llenará con JS -->
             </div>
         </div>
 
@@ -83,62 +67,101 @@
     <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
 
     <script>
-        // PGN simulando el plan:
-        // 1.e4 b6 2.d4 Bb7 3.Nc3 g6 4.Nf3 Bg7 5.Bg5 d6 
-        // --- AQUÍ EMPIEZA LA SIMULACIÓN PASO A PASO ---
-        // 6.Qd2 Nf6 7.O-O-O O-O 8.Bh6 c5 9.h4 cxd4 10.Nxd4 Nc6 11.h5
-        
-        const gamePGN = "1. e4 b6 2. d4 Bb7 3. Nc3 g6 4. Nf3 Bg7 5. Bg5 d6 6. Qd2 Nf6 7. O-O-O O-O 8. Bh6 c5 9. h4 cxd4 10. Nxd4 Nc6 11. h5";
-        
-        const chess = new Chess();
-        chess.load_pgn(gamePGN);
-        const history = chess.history({ verbose: true });
-        
-        // Puntos de parada para relacionar con la explicación
-        // step 0: Tras mov 5 (historial indx 9)
-        // step 1: Tras Qd2 (historial indx 10) y d6 (indx 11) -> indice 11
-        // step 2: Tras O-O-O (indx 12) y O-O (indx 13) -> indice 13
-        // step 3: Tras Bh6 (indx 14) y c5 (indx 15) -> indice 15
-        // step 4: Tras h4, h5 (indx 20)
-        
-        const stepMilestones = [9, 11, 13, 15, 20];
+        const scenarios = {
+            fianchetto: {
+                title: "Simulación: Ataque al Doble Fianchetto",
+                pgn: "1. e4 b6 2. d4 Bb7 3. Nc3 g6 4. Nf3 Bg7 5. Bg5 d6 6. Qd2 Nf6 7. O-O-O O-O 8. Bh6 c5 9. h4 cxd4 10. Nxd4 Nc6 11. h5",
+                milestones: [9, 11, 13, 15, 20],
+                steps: [
+                    { title: "1. La posición inicial", desc: "Las negras plantean un esquema pasivo de 'Doble Fianchetto' (b6, g6, Bb7, Bg7), cediendo el centro. Las blancas toman control con d4 y e4, y desarrollan piezas menores." },
+                    { title: "2. Batería (Qd2)", desc: "Tu siguiente paso lógico es conectar la Dama con tu Alfil de casillas oscuras (Bg5) jugando <strong>Qd2</strong>. Esto prepara el terreno para eliminar a su mejor defensor." },
+                    { title: "3. Enroque Largo (O-O-O)", desc: "Al enrocar en el flanco de dama (<strong>O-O-O</strong>), pones a tu Rey a salvo y traes tu Torre centralizando tus piezas pesadas." },
+                    { title: "4. Intercambia su defensor (Bh6)", desc: "Una vez que las negras enroquen corto, juegas <strong>Bh6</strong> para obligar a cambiar su alfil de g7. Sin ese alfil, su flanco de rey quedará lleno de agujeros." },
+                    { title: "5. La Tormenta de Peones (h4-h5)", desc: "Con el rey negro expuesto, lanzas <strong>h4 seguido de h5</strong> para abrir la columna 'h'. Tu Torre en h1 liderará un ataque devastador directo a su rey." }
+                ]
+            },
+            londres: {
+                title: "Simulación: Destruye el Sistema Londres",
+                pgn: "1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Nf6 5. Nf3 Qb6 6. Qb3 c4 7. Qc2 Bf5 8. Qc1 e6",
+                milestones: [3, 7, 9, 11, 15],
+                steps: [
+                    { title: "1. Golpea el centro (c5!)", desc: "El Sistema Londres se basa en la solidez del centro. Al jugar <strong>2... c5!</strong> rápidamente, atacas la base de la pirámide blanca (d4) y cuestionas su desarrollo." },
+                    { title: "2. Desarrollo agresivo (Nc6 y Nf6)", desc: "Desarrollas tus caballos hacia el centro (<strong>Nc6, Nf6</strong>). Pones presión constante sobre d4 y e5. Las blancas juegan de forma sólida con c3 y e3." },
+                    { title: "3. El ataque al punto débil (Qb6)", desc: "¡La clave! Como el Alfil blanco salió a f4 temprano, dejó débil la casilla b2. Con <strong>Qb6</strong>, obligas a las blancas a defender pasivamente o cambiar damas." },
+                    { title: "4. Gana espacio (c4!)", desc: "Cuando las blancas defienden con Qb3, avanzas <strong>c4!</strong> ganando un enorme espacio en el flanco de dama y obligando a la dama blanca a retirarse (Qc2)." },
+                    { title: "5. El golpe maestro (Bf5!)", desc: "¡Una jugada brillante! <strong>Bf5!</strong> controla diagonales críticas. Si las blancas intentan <em>Qxf5</em>, pierden por <em>Qxb2</em> atrapando la torre en a1. Las blancas quedan pasivas y atrapadas." }
+                ]
+            }
+        };
+
+        let currentScenario = 'fianchetto';
+        let chessInstance = new Chess();
+        let replayChess = new Chess();
+        let history = [];
         let currentMilestoneIndex = 0;
-        
-        // Inicializar tablero en paso 0
-        const replayChess = new Chess();
-        for(let i=0; i<=stepMilestones[0]; i++) {
-            replayChess.move(history[i]);
+        let board = null;
+
+        function loadScenario(scenarioId) {
+            currentScenario = scenarioId;
+            const data = scenarios[scenarioId];
+            
+            $('#scenario-title').text(data.title);
+            
+            // Render steps
+            $('#steps-container').empty();
+            data.steps.forEach((step, index) => {
+                $('#steps-container').append(`
+                    <div class="p-4 rounded-lg transition-all step-card" data-step="${index}">
+                        <h4 class="font-bold text-lg text-blue-700">${step.title}</h4>
+                        <p class="text-slate-600 mt-1">${step.desc}</p>
+                    </div>
+                `);
+            });
+
+            chessInstance = new Chess();
+            chessInstance.load_pgn(data.pgn);
+            history = chessInstance.history({ verbose: true });
+            
+            currentMilestoneIndex = 0;
+            replayChess = new Chess();
+            
+            const firstMilestone = data.milestones[0];
+            for(let i=0; i<=firstMilestone; i++) {
+                if(history[i]) replayChess.move(history[i]);
+            }
+            
+            if(!board) {
+                board = Chessboard('board', {
+                    position: replayChess.fen(),
+                    pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0/wikipedia/{piece}.png'
+                });
+            } else {
+                board.position(replayChess.fen(), false);
+            }
+            
+            updateUI();
         }
-        
-        const board = Chessboard('board', {
-            position: replayChess.fen(),
-            pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0/wikipedia/{piece}.png'
-        });
 
         function updateUI() {
-            // Actulizar tablero
             board.position(replayChess.fen());
-            $('#moveStatus').text("Movimientos jugados: " + replayChess.pgn());
+            $('#moveStatus').text("Movimientos: " + replayChess.pgn());
             
-            // Actualizar botones
+            const milestones = scenarios[currentScenario].milestones;
             $('#btnPrev').prop('disabled', currentMilestoneIndex === 0).toggleClass('opacity-50', currentMilestoneIndex === 0);
-            $('#btnNext').prop('disabled', currentMilestoneIndex === stepMilestones.length - 1).toggleClass('opacity-50', currentMilestoneIndex === stepMilestones.length - 1);
+            $('#btnNext').prop('disabled', currentMilestoneIndex === milestones.length - 1).toggleClass('opacity-50', currentMilestoneIndex === milestones.length - 1);
             
-            // Actualizar tarjetas
             $('.step-card').removeClass('step-active');
             $(`.step-card[data-step="${currentMilestoneIndex}"]`).addClass('step-active');
         }
 
         $('#btnNext').on('click', function() {
-            if(currentMilestoneIndex < stepMilestones.length - 1) {
-                const targetMove = stepMilestones[currentMilestoneIndex + 1];
-                const currentMove = stepMilestones[currentMilestoneIndex];
+            const milestones = scenarios[currentScenario].milestones;
+            if(currentMilestoneIndex < milestones.length - 1) {
+                const targetMove = milestones[currentMilestoneIndex + 1];
+                const currentMove = milestones[currentMilestoneIndex];
                 
-                // Aplicar los movimientos del milestone
                 for(let i = currentMove + 1; i <= targetMove; i++) {
-                    if(history[i]) {
-                        replayChess.move(history[i]);
-                    }
+                    if(history[i]) replayChess.move(history[i]);
                 }
                 currentMilestoneIndex++;
                 updateUI();
@@ -146,11 +169,11 @@
         });
 
         $('#btnPrev').on('click', function() {
+            const milestones = scenarios[currentScenario].milestones;
             if(currentMilestoneIndex > 0) {
-                const currentMove = stepMilestones[currentMilestoneIndex];
-                const targetMove = stepMilestones[currentMilestoneIndex - 1];
+                const currentMove = milestones[currentMilestoneIndex];
+                const targetMove = milestones[currentMilestoneIndex - 1];
                 
-                // Deshacer los movimientos
                 for(let i = currentMove; i > targetMove; i--) {
                     replayChess.undo();
                 }
@@ -158,9 +181,15 @@
                 updateUI();
             }
         });
+
+        $('.scenario-btn').on('click', function() {
+            $('.scenario-btn').removeClass('active');
+            $(this).addClass('active');
+            loadScenario($(this).data('scenario'));
+        });
         
-        // Init UI
-        updateUI();
+        // Init
+        loadScenario('fianchetto');
     </script>
 </body>
 </html>
