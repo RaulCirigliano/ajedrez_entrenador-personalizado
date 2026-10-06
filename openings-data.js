@@ -1875,6 +1875,408 @@ const OPENINGS_DATA = [
     ],
     traps: []
   }
+,
+  {
+    "id": "trampa-arca-noe",
+    "category": "Trampas",
+    "name": "La trampa del Arca de Noé",
+    "eco": "C74",
+    "side": "b",
+    "difficulty": "Intermedio",
+    "style": "Trampa de captura de pieza",
+    "ratingRange": "800 - 1800",
+    "summary": "Una trampa clásica en la Apertura Ruy López donde las negras dejan aparentemente colgado un peón para terminar atrapando el valioso alfil de casillas claras del blanco.",
+    "plansWhite": [
+      "Tomar el peón central creyendo que es un error de las negras.",
+      "Intentar atacar la torre en a8 con la dama."
+    ],
+    "plansBlack": [
+      "Jugar c5 amenazando a la dama y preparando la red.",
+      "Avanzar c4 para encerrar definitivamente al alfil en b3."
+    ],
+    "keySquares": ["c4", "b3"],
+    "moves": [
+      { "san": "e4", "from": "e2", "to": "e4", "name": "Apertura de peón rey", "comment": "Típico comienzo." },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "Respuesta simétrica", "comment": "Control central." },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "Ataque al centro", "comment": "Desarrollo." },
+      { "san": "Nc6", "from": "b8", "to": "c6", "name": "Defensa", "comment": "Sostiene e5." },
+      { "san": "Bb5", "from": "f1", "to": "b5", "name": "Ruy López", "comment": "Apertura Española." },
+      { "san": "a6", "from": "a7", "to": "a6", "name": "Defensa Morphy", "comment": "Obliga a decidir al alfil." },
+      { "san": "Ba4", "from": "b5", "to": "a4", "name": "Retirada", "comment": "Mantiene la presión." },
+      { "san": "d6", "from": "d7", "to": "d6", "name": "Variante Steinitz Diferida", "comment": "Sólido soporte." },
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Ruptura central", "comment": "Las blancas golpean el centro." },
+      { "san": "b5", "from": "b7", "to": "b5", "name": "Expansión", "comment": "Ganan espacio expulsando al alfil." },
+      { "san": "Bb3", "from": "a4", "to": "b3", "name": "Retirada del alfil", "comment": "Apunta a f7." },
+      { "san": "Nxd4", "from": "c6", "to": "d4", "name": "Simplificación", "comment": "Cambio de caballos." },
+      { "san": "Nxd4", "from": "f3", "to": "d4", "name": "Recaptura", "comment": "" },
+      { "san": "exd4", "from": "e5", "to": "d4", "name": "Captura", "comment": "Las negras toman en d4." },
+      { "san": "Qxd4", "from": "d1", "to": "d4", "name": "El Cebo", "comment": "Las blancas creen ganar un peón limpio, pero caen en la trampa." },
+      { "san": "c5", "from": "c7", "to": "c5", "name": "Ataque a la Dama", "comment": "Ganando un tiempo y preparando c4." },
+      { "san": "Qd5", "from": "d4", "to": "d5", "name": "Amenaza", "comment": "La dama blanca ataca f7 y la torre de a8." },
+      { "san": "Be6", "from": "c8", "to": "e6", "name": "Defensa de desarrollo", "comment": "Cubre las amenazas." },
+      { "san": "Qc6+", "from": "d5", "to": "c6", "name": "Jaque intermedio", "comment": "Intento de evitar la red." },
+      { "san": "Bd7", "from": "e6", "to": "d7", "name": "Bloqueo", "comment": "Defiende con tempo." },
+      { "san": "Qd5", "from": "c6", "to": "d5", "name": "Retirada obligada", "comment": "" },
+      { "san": "c4", "from": "c5", "to": "c4", "name": "¡Arca de Noé!", "comment": "El alfil blanco está totalmente atrapado." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-legal",
+    "category": "Trampas",
+    "name": "El mate de Légal",
+    "eco": "C50",
+    "side": "w",
+    "difficulty": "Básico",
+    "style": "Sacrificio de dama y mate",
+    "ratingRange": "600 - 1500",
+    "summary": "Uno de los mates más famosos de la historia. Las blancas ignoran una clavada y sacrifican su dama para dar un elegante jaque mate con sus piezas menores.",
+    "plansWhite": [
+      "Provocar al alfil de casillas claras negro.",
+      "Sacrificar la dama valientemente si el alfil retrocede a h5.",
+      "Ejecutar el mate coordinado con dos caballos y un alfil."
+    ],
+    "plansBlack": [
+      "Clavar el caballo blanco tempranamente.",
+      "No caer en la trampa y capturar el caballo en vez de la dama."
+    ],
+    "keySquares": ["f7", "d5"],
+    "moves": [
+      { "san": "e4", "from": "e2", "to": "e4", "name": "Apertura", "comment": "" },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "Respuesta", "comment": "" },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "Desarrollo", "comment": "" },
+      { "san": "Nc6", "from": "b8", "to": "c6", "name": "Defensa", "comment": "" },
+      { "san": "Bc4", "from": "f1", "to": "c4", "name": "Italiana", "comment": "" },
+      { "san": "d6", "from": "d7", "to": "d6", "name": "Defensa", "comment": "" },
+      { "san": "Nc3", "from": "b1", "to": "c3", "name": "Desarrollo", "comment": "" },
+      { "san": "Bg4", "from": "c8", "to": "g4", "name": "Clavada", "comment": "Una clavada aparentemente molesta." },
+      { "san": "h3", "from": "h2", "to": "h3", "name": "Cuestionando el alfil", "comment": "Las blancas obligan a decidir." },
+      { "san": "Bh5", "from": "g4", "to": "h5", "name": "Manteniendo la clavada", "comment": "Error fatal. Era mejor cambiar en f3." },
+      { "san": "Nxe5", "from": "f3", "to": "e5", "name": "¡El Sacrificio!", "comment": "Se ignora la clavada ofreciendo la dama limpiamente." },
+      { "san": "Bxd1", "from": "h5", "to": "d1", "name": "Codicia mortal", "comment": "Las negras toman la dama creyendo que ganan." },
+      { "san": "Bxf7+", "from": "c4", "to": "f7", "name": "Ataque al Rey", "comment": "Jaque apoyado por el caballo." },
+      { "san": "Ke7", "from": "e8", "to": "e7", "name": "Única", "comment": "" },
+      { "san": "Nd5#", "from": "c3", "to": "d5", "name": "¡Mate de Légal!", "comment": "Un mate espectacular en el centro del tablero." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-elefante",
+    "category": "Trampas",
+    "name": "La trampa Elefante",
+    "eco": "D50",
+    "side": "b",
+    "difficulty": "Intermedio",
+    "style": "Trampa en la clavada",
+    "ratingRange": "1000 - 1800",
+    "summary": "Una trampa excelente en el Gambito de Dama. Las blancas asumen que un caballo está clavado, pero las negras lo mueven sacrificando su dama temporalmente para asestar un golpe letal.",
+    "plansWhite": [
+      "Clavar el caballo negro en f6.",
+      "Creer que el peón de d5 está gratis porque el caballo no puede moverse."
+    ],
+    "plansBlack": [
+      "Preparar un ataque a la descubierta.",
+      "Mover el caballo 'clavado' y castigar con un jaque de alfil si la dama es capturada."
+    ],
+    "keySquares": ["b4", "d5"],
+    "moves": [
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Apertura Dama", "comment": "" },
+      { "san": "d5", "from": "d7", "to": "d5", "name": "Respuesta", "comment": "" },
+      { "san": "c4", "from": "c2", "to": "c4", "name": "Gambito de Dama", "comment": "" },
+      { "san": "e6", "from": "e7", "to": "e6", "name": "Defensa Ortodoxa", "comment": "" },
+      { "san": "Nc3", "from": "b1", "to": "c3", "name": "Desarrollo", "comment": "" },
+      { "san": "Nf6", "from": "g8", "to": "f6", "name": "Desarrollo", "comment": "" },
+      { "san": "Bg5", "from": "c1", "to": "g5", "name": "Clavada", "comment": "Aparentemente, el caballo no puede moverse." },
+      { "san": "Nbd7", "from": "b8", "to": "d7", "name": "La preparación", "comment": "Una jugada sutil que prepara la celada." },
+      { "san": "cxd5", "from": "c4", "to": "d5", "name": "Aclarando el centro", "comment": "" },
+      { "san": "exd5", "from": "e6", "to": "d5", "name": "Recaptura", "comment": "" },
+      { "san": "Nxd5", "from": "c3", "to": "d5", "name": "El Peón Envenenado", "comment": "Las blancas creen ganar un peón porque el caballo de f6 está clavado por la dama negra." },
+      { "san": "Nxd5", "from": "f6", "to": "d5", "name": "¡La Trampa!", "comment": "¡El caballo se mueve dejando la dama a merced del alfil!" },
+      { "san": "Bxd8", "from": "g5", "to": "d8", "name": "Captura de la Dama", "comment": "Las blancas aceptan el 'regalo'." },
+      { "san": "Bb4+", "from": "f8", "to": "b4", "name": "El Golpe", "comment": "El Rey blanco no puede moverse. La única defensa es cubrir con la dama." },
+      { "san": "Qd2", "from": "d1", "to": "d2", "name": "Interposición", "comment": "Forzado." },
+      { "san": "Bxd2+", "from": "b4", "to": "d2", "name": "Captura con jaque", "comment": "" },
+      { "san": "Kxd2", "from": "e1", "to": "d2", "name": "Captura forzada", "comment": "" },
+      { "san": "Kxd8", "from": "e8", "to": "d8", "name": "Recuperación", "comment": "Las negras recuperan material y se quedan con una pieza extra limpia." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-lasker",
+    "category": "Trampas",
+    "name": "La trampa Lasker",
+    "eco": "D08",
+    "side": "b",
+    "difficulty": "Avanzado",
+    "style": "Sub-promoción táctica",
+    "ratingRange": "1200 - 2000",
+    "summary": "Una trampa genial en el Contragambito Albin. Las negras sacrifican una pieza y utilizan una rarísima promoción a caballo (subpromoción) con jaque para destrozar el centro blanco.",
+    "plansWhite": [
+      "Jugar e3 prematuramente para romper el molesto peón d4."
+    ],
+    "plansBlack": [
+      "Permitir la captura del alfil para dar un jaque letal.",
+      "Coronar caballo en vez de dama para ganar tiempos cruciales."
+    ],
+    "keySquares": ["f2", "g1"],
+    "moves": [
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Apertura Dama", "comment": "" },
+      { "san": "d5", "from": "d7", "to": "d5", "name": "Respuesta", "comment": "" },
+      { "san": "c4", "from": "c2", "to": "c4", "name": "Gambito", "comment": "" },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "Contragambito Albin", "comment": "Muy agresivo." },
+      { "san": "dxe5", "from": "d4", "to": "e5", "name": "Aceptado", "comment": "" },
+      { "san": "d4", "from": "d5", "to": "d4", "name": "La Cuña", "comment": "El peón en d4 es extremadamente molesto." },
+      { "san": "e3", "from": "e2", "to": "e3", "name": "El Error", "comment": "Las blancas intentan deshacerse del peón." },
+      { "san": "Bb4+", "from": "f8", "to": "b4", "name": "Jaque intermedio", "comment": "" },
+      { "san": "Bd2", "from": "c1", "to": "d2", "name": "Defensa natural", "comment": "" },
+      { "san": "dxe3", "from": "d4", "to": "e3", "name": "¡El Sacrificio!", "comment": "Se deja el alfil colgado." },
+      { "san": "Bxb4", "from": "d2", "to": "b4", "name": "Captura errónea", "comment": "Creen que ganan pieza." },
+      { "san": "exf2+", "from": "e3", "to": "f2", "name": "Jaque y ataque a la torre", "comment": "El rey no puede ir a e2 sin perder la dama." },
+      { "san": "Ke2", "from": "e1", "to": "e2", "name": "Movimiento forzado", "comment": "Si se captura en f2, las negras ganan la dama (Qxd1)." },
+      { "san": "fxg1=N+", "from": "f2", "to": "g1", "promotion": "n", "name": "¡La Promoción a Caballo!", "comment": "Jugada maestra. Si se corona dama, las blancas cambian damas." },
+      { "san": "Ke1", "from": "e2", "to": "e1", "name": "Retirada", "comment": "Si Rxb1, Bg4+ gana la dama." },
+      { "san": "Qh4+", "from": "d8", "to": "h4", "name": "Ventaja decisiva", "comment": "Ataque arrasador." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-rubinstein",
+    "category": "Trampas",
+    "name": "La trampa Rubinstein",
+    "eco": "D63",
+    "side": "w",
+    "difficulty": "Avanzado",
+    "style": "Posicional y atrapamiento",
+    "ratingRange": "1400 - 2200",
+    "summary": "Una sutil trampa en el Gambito de Dama. Si las negras defienden un salto central de forma incorrecta, su Dama termina quedando totalmente asfixiada por un alfil blanco.",
+    "plansWhite": [
+      "Provocar que las negras defiendan su caballo e4 con f5.",
+      "Explotar las casillas claras debilitadas y asfixiar la dama rival."
+    ],
+    "plansBlack": [
+      "Creer que la posición está sólida y el caballo centralizado es fuerte."
+    ],
+    "keySquares": ["c7", "d5"],
+    "moves": [
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Apertura Dama", "comment": "" },
+      { "san": "d5", "from": "d7", "to": "d5", "name": "", "comment": "" },
+      { "san": "c4", "from": "c2", "to": "c4", "name": "Gambito", "comment": "" },
+      { "san": "e6", "from": "e7", "to": "e6", "name": "", "comment": "" },
+      { "san": "Nc3", "from": "b1", "to": "c3", "name": "", "comment": "" },
+      { "san": "Nf6", "from": "g8", "to": "f6", "name": "", "comment": "" },
+      { "san": "Bg5", "from": "c1", "to": "g5", "name": "", "comment": "" },
+      { "san": "Be7", "from": "f8", "to": "e7", "name": "", "comment": "" },
+      { "san": "e3", "from": "e2", "to": "e3", "name": "", "comment": "" },
+      { "san": "O-O", "from": "e8", "to": "g8", "name": "", "comment": "" },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "", "comment": "" },
+      { "san": "Nbd7", "from": "b8", "to": "d7", "name": "", "comment": "" },
+      { "san": "Rc1", "from": "a1", "to": "c1", "name": "", "comment": "" },
+      { "san": "c6", "from": "c7", "to": "c6", "name": "", "comment": "" },
+      { "san": "Qc2", "from": "d1", "to": "c2", "name": "Posición Ortodoxa", "comment": "Típico del Gambito de Dama." },
+      { "san": "a6", "from": "a7", "to": "a6", "name": "", "comment": "" },
+      { "san": "cxd5", "from": "c4", "to": "d5", "name": "", "comment": "" },
+      { "san": "exd5", "from": "e6", "to": "d5", "name": "", "comment": "" },
+      { "san": "Bd3", "from": "f1", "to": "d3", "name": "", "comment": "" },
+      { "san": "Re8", "from": "f8", "to": "e8", "name": "", "comment": "" },
+      { "san": "O-O", "from": "e1", "to": "g1", "name": "", "comment": "" },
+      { "san": "Ne4", "from": "f6", "to": "e4", "name": "Ataque Central", "comment": "Parece poderoso." },
+      { "san": "Bf4", "from": "g5", "to": "f4", "name": "Retirada astuta", "comment": "Dejando que las negras se equivoquen." },
+      { "san": "f5", "from": "f7", "to": "f5", "name": "El Error Fatal", "comment": "Aparentemente blinda el caballo, pero abandona la dama." },
+      { "san": "Nxd5", "from": "c3", "to": "d5", "name": "¡Golpe táctico!", "comment": "Sacrificio temporal del caballo." },
+      { "san": "cxd5", "from": "c6", "to": "d5", "name": "Captura", "comment": "Las negras caen." },
+      { "san": "Bc7", "from": "f4", "to": "c7", "name": "¡La Red!", "comment": "El alfil domina c7, atrapando a la dama negra sin escape posible." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-siberiana",
+    "category": "Trampas",
+    "name": "La trampa Siberiana",
+    "eco": "B21",
+    "side": "b",
+    "difficulty": "Intermedio",
+    "style": "Ataque fulminante",
+    "ratingRange": "1000 - 1800",
+    "summary": "Una letal trampa en el Gambito Smith-Morra contra la Siciliana. Termina en la caída de la dama blanca o un mate imparable en h2.",
+    "plansWhite": [
+      "Creer que jugar h3 expulsará fácilmente al caballo invasor."
+    ],
+    "plansBlack": [
+      "Preparar un ataque encubierto a la dama blanca mediante el salto de caballo a d4.",
+      "Destrozar las defensas blancas gracias a la sincronización."
+    ],
+    "keySquares": ["d4", "h2"],
+    "moves": [
+      { "san": "e4", "from": "e2", "to": "e4", "name": "Apertura", "comment": "" },
+      { "san": "c5", "from": "c7", "to": "c5", "name": "Siciliana", "comment": "" },
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Gambito", "comment": "" },
+      { "san": "cxd4", "from": "c5", "to": "d4", "name": "Captura", "comment": "" },
+      { "san": "c3", "from": "c2", "to": "c3", "name": "Smith-Morra", "comment": "" },
+      { "san": "dxc3", "from": "d4", "to": "c3", "name": "Aceptado", "comment": "" },
+      { "san": "Nxc3", "from": "b1", "to": "c3", "name": "Desarrollo blanco", "comment": "" },
+      { "san": "Nc6", "from": "b8", "to": "c6", "name": "Desarrollo", "comment": "" },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "Desarrollo", "comment": "" },
+      { "san": "e6", "from": "e7", "to": "e6", "name": "Sólido", "comment": "" },
+      { "san": "Bc4", "from": "f1", "to": "c4", "name": "Agresivo", "comment": "" },
+      { "san": "Qc7", "from": "d8", "to": "c7", "name": "Preparación", "comment": "Apunta sutilmente a la columna c y controla casillas." },
+      { "san": "O-O", "from": "e1", "to": "g1", "name": "Seguridad", "comment": "" },
+      { "san": "Nf6", "from": "g8", "to": "f6", "name": "Desarrollo", "comment": "" },
+      { "san": "Qe2", "from": "d1", "to": "e2", "name": "Centralización", "comment": "Normal, pero permite la trampa." },
+      { "san": "Ng4", "from": "f6", "to": "g4", "name": "La Amenaza", "comment": "Apunta al mate en h2 y a otras tácticas." },
+      { "san": "h3", "from": "h2", "to": "h3", "name": "El Error", "comment": "Las blancas quieren espantar al caballo." },
+      { "san": "Nd4", "from": "c6", "to": "d4", "name": "¡El Golpe Siberiano!", "comment": "Ataca a la dama. Si Nxd4, entonces Qh2#. Si la dama huye a d1 o d3, las negras cambian en f3 destrozando todo." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-fajarowicz",
+    "category": "Trampas",
+    "name": "La trampa Fajarowicz",
+    "eco": "A51",
+    "side": "b",
+    "difficulty": "Avanzado",
+    "style": "Atracción del rey y descubierta",
+    "ratingRange": "1200 - 1900",
+    "summary": "Una línea traicionera del Gambito Budapest. Las negras entregan el caballo para sacar al rey blanco a pasear y capturar su dama mediante un jaque descubierto.",
+    "plansWhite": [
+      "Jugar pasivo (a3) para evitar jaques y capturas."
+    ],
+    "plansBlack": [
+      "Poner a las blancas bajo extrema presión táctica de forma temprana."
+    ],
+    "keySquares": ["f2", "g3"],
+    "moves": [
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Peón Dama", "comment": "" },
+      { "san": "Nf6", "from": "g8", "to": "f6", "name": "Defensa India", "comment": "" },
+      { "san": "c4", "from": "c2", "to": "c4", "name": "", "comment": "" },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "Gambito Budapest", "comment": "" },
+      { "san": "dxe5", "from": "d4", "to": "e5", "name": "Captura", "comment": "" },
+      { "san": "Ne4", "from": "f6", "to": "e4", "name": "Variante Fajarowicz", "comment": "Más raro que Ng4, con trampas venenosas." },
+      { "san": "a3", "from": "a2", "to": "a3", "name": "Prevención", "comment": "Evita Bb4+." },
+      { "san": "d6", "from": "d7", "to": "d6", "name": "Ruptura", "comment": "" },
+      { "san": "exd6", "from": "e5", "to": "d6", "name": "Cambio", "comment": "" },
+      { "san": "Bxd6", "from": "f8", "to": "d6", "name": "Desarrollo", "comment": "El alfil se sitúa perfectamente." },
+      { "san": "g3", "from": "g2", "to": "g3", "name": "El Error Crítico", "comment": "Las blancas quieren fianchettar o defenderse pero abren una debilidad inmensa." },
+      { "san": "Nxf2", "from": "e4", "to": "f2", "name": "¡El Sacrificio de Atracción!", "comment": "Ataca la dama y la torre. El rey debe capturar." },
+      { "san": "Kxf2", "from": "e1", "to": "f2", "name": "Forzado", "comment": "" },
+      { "san": "Bxg3+", "from": "d6", "to": "g3", "name": "Jaque Descubierto", "comment": "El alfil ataca al rey, y libera el camino de la dama negra hacia d1." },
+      { "san": "hxg3", "from": "h2", "to": "g3", "name": "Captura forzada", "comment": "El rey blanco queda fatal." },
+      { "san": "Qxd1", "from": "d8", "to": "d1", "name": "Dama caída", "comment": "Las negras ganan la dama limpiamente." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-blackburne",
+    "category": "Trampas",
+    "name": "La trampa Blackburne Shilling",
+    "eco": "C50",
+    "side": "b",
+    "difficulty": "Básico",
+    "style": "Ataque veloz al enroque",
+    "ratingRange": "600 - 1400",
+    "summary": "Una trampa para principiantes muy divertida en la Apertura Italiana. Dejas el peón e5 colgado y cuando las blancas lo comen para atacar f7, lanzas un contraataque devastador sobre g2.",
+    "plansWhite": [
+      "Morder el cebo y comer el peón central buscando ataques fáciles sobre f7."
+    ],
+    "plansBlack": [
+      "Jugar de manera aparentemente descuidada con Nd4.",
+      "Coordinar la dama en g2 con el caballo para crear un mate asfixiado imparable."
+    ],
+    "keySquares": ["g2", "e4", "f3"],
+    "moves": [
+      { "san": "e4", "from": "e2", "to": "e4", "name": "", "comment": "" },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "", "comment": "" },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "", "comment": "" },
+      { "san": "Nc6", "from": "b8", "to": "c6", "name": "", "comment": "" },
+      { "san": "Bc4", "from": "f1", "to": "c4", "name": "Italiana", "comment": "" },
+      { "san": "Nd4", "from": "c6", "to": "d4", "name": "El Cebo", "comment": "Las negras mueven una pieza ya desarrollada y dejan e5 indefenso." },
+      { "san": "Nxe5", "from": "f3", "to": "e5", "name": "Codicia", "comment": "Parece la jugada obvia, ganando peón y atacando f7." },
+      { "san": "Qg5", "from": "d8", "to": "g5", "name": "Doble Amenaza", "comment": "Ataca al caballo y al peón de g2." },
+      { "san": "Nxf7", "from": "e5", "to": "f7", "name": "Ceguera blanca", "comment": "Creen que hacen un doblete maravilloso a la dama y torre." },
+      { "san": "Qxg2", "from": "g5", "to": "g2", "name": "El Contraataque", "comment": "Ataca la torre blanca." },
+      { "san": "Rf1", "from": "h1", "to": "f1", "name": "Defensa única", "comment": "" },
+      { "san": "Qxe4+", "from": "g2", "to": "e4", "name": "Jaque mortal", "comment": "" },
+      { "san": "Be2", "from": "c4", "to": "e2", "name": "Bloqueo", "comment": "Bloquear con la dama (Qe2) pierde la dama por Nxe2." },
+      { "san": "Nf3#", "from": "d4", "to": "f3", "name": "¡Mate asfixiado!", "comment": "Precioso cierre donde las piezas blancas ahogan a su propio rey." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-englund",
+    "category": "Trampas",
+    "name": "La trampa del Gambito Englund",
+    "eco": "A40",
+    "side": "b",
+    "difficulty": "Intermedio",
+    "style": "Trampa rápida y engaño",
+    "ratingRange": "800 - 1500",
+    "summary": "Una trampa agresiva en las primeras jugadas contra 1.d4. Termina en un sorpresivo mate de dama en la primera fila debido a la mala coordinación de las piezas blancas.",
+    "plansWhite": [
+      "Intentar proteger su ventaja material tras aceptar el gambito."
+    ],
+    "plansBlack": [
+      "Presionar agresivamente b2.",
+      "Explotar la clavada sobre el alfil blanco si intenta cubrir su torre."
+    ],
+    "keySquares": ["b2", "b4", "c1"],
+    "moves": [
+      { "san": "d4", "from": "d2", "to": "d4", "name": "Peón Dama", "comment": "" },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "Gambito Englund", "comment": "Respuesta chocante y teóricamente dudosa." },
+      { "san": "dxe5", "from": "d4", "to": "e5", "name": "Captura", "comment": "" },
+      { "san": "Nc6", "from": "b8", "to": "c6", "name": "Ataque", "comment": "" },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "Defensa", "comment": "" },
+      { "san": "Qe7", "from": "d8", "to": "e7", "name": "Doble ataque", "comment": "Ahora atacan e5 con dos piezas." },
+      { "san": "Bf4", "from": "c1", "to": "f4", "name": "Doble defensa", "comment": "Las blancas se aferran al peón." },
+      { "san": "Qb4+", "from": "e7", "to": "b4", "name": "Jaque y ataque triple", "comment": "Ataca al rey, al alfil y a b2." },
+      { "san": "Bd2", "from": "f4", "to": "d2", "name": "Defensa lógica", "comment": "Cubre el jaque y ataca a la dama." },
+      { "san": "Qxb2", "from": "b4", "to": "b2", "name": "Captura de peón", "comment": "La torre de a1 corre peligro." },
+      { "san": "Bc3", "from": "d2", "to": "c3", "name": "El Error", "comment": "Parece bueno porque ataca a la dama y defiende la torre." },
+      { "san": "Bb4", "from": "f8", "to": "b4", "name": "¡Clavada letal!", "comment": "El alfil defiende a su dama clavando al alfil blanco." },
+      { "san": "Qd2", "from": "d1", "to": "d2", "name": "Intento de defensa", "comment": "Desclava al alfil para comerse a la dama." },
+      { "san": "Bxc3", "from": "b4", "to": "c3", "name": "Cambio forzado", "comment": "" },
+      { "san": "Qxc3", "from": "d2", "to": "c3", "name": "Error Final", "comment": "Las blancas debieron retomar de caballo (Nxc3). Al retomar de dama, abandonan la defensa de su primera fila." },
+      { "san": "Qc1#", "from": "b2", "to": "c1", "name": "Jaque Mate", "comment": "Un mate humillante en plena apertura." }
+    ],
+    "traps": []
+  },
+  {
+    "id": "trampa-fishing",
+    "category": "Trampas",
+    "name": "La trampa de la Caña de Pescar",
+    "eco": "C65",
+    "side": "b",
+    "difficulty": "Intermedio",
+    "style": "Ataque asfixiante",
+    "ratingRange": "900 - 1700",
+    "summary": "Una divertida trampa contra la Ruy López. El caballo se usa como cebo en g4; si las blancas lo capturan, se abre la columna h desatando un ataque imparable con la dama y el peón.",
+    "plansWhite": [
+      "Tratar de ahuyentar al agresivo caballo negro jugando h3 y luego capturarlo sin medir consecuencias."
+    ],
+    "plansBlack": [
+      "Colocar el caballo en g4 y defenderlo con el peón h5.",
+      "Utilizar la apertura de la columna h para colar la dama y dar mate."
+    ],
+    "keySquares": ["g4", "h4", "g3"],
+    "moves": [
+      { "san": "e4", "from": "e2", "to": "e4", "name": "Apertura", "comment": "" },
+      { "san": "e5", "from": "e7", "to": "e5", "name": "Respuesta", "comment": "" },
+      { "san": "Nf3", "from": "g1", "to": "f3", "name": "Desarrollo", "comment": "" },
+      { "san": "Nc6", "from": "b8", "to": "c6", "name": "Defensa", "comment": "" },
+      { "san": "Bb5", "from": "f1", "to": "b5", "name": "Ruy López", "comment": "" },
+      { "san": "Nf6", "from": "g8", "to": "f6", "name": "Berlinesa", "comment": "" },
+      { "san": "O-O", "from": "e1", "to": "g1", "name": "Enroque", "comment": "" },
+      { "san": "Ng4", "from": "f6", "to": "g4", "name": "La Caña al agua", "comment": "Jugada provocativa." },
+      { "san": "h3", "from": "h2", "to": "h3", "name": "Reacción natural", "comment": "Tratan de echar al caballo." },
+      { "san": "h5", "from": "h7", "to": "h5", "name": "El Cebo", "comment": "Las negras 'se dejan' el caballo ofreciéndolo a cambio de abrir la columna." },
+      { "san": "hxg4", "from": "h3", "to": "g4", "name": "El Error fatal", "comment": "Las blancas pican el anzuelo." },
+      { "san": "hxg4", "from": "h5", "to": "g4", "name": "La Red", "comment": "Se abre la columna H y el caballo blanco debe huir." },
+      { "san": "Ne1", "from": "f3", "to": "e1", "name": "Retirada", "comment": "Huye a una casilla segura." },
+      { "san": "Qh4", "from": "d8", "to": "h4", "name": "La Invasión", "comment": "La dama entra y amenaza mate inminente en h1 o h2." },
+      { "san": "f3", "from": "f2", "to": "f3", "name": "Desesperación", "comment": "Las blancas intentan hacer un hueco para que escape el rey por f2." },
+      { "san": "g3", "from": "g4", "to": "g3", "name": "¡La Tapa del Ataúd!", "comment": "Corta la única vía de escape del rey blanco. El mate en Qh1 o Qh2 es ahora absolutamente imparable." }
+    ],
+    "traps": []
+  }
 ];
 
 if (typeof module !== 'undefined' && module.exports) {
