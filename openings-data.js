@@ -1643,6 +1643,53 @@ const OPENINGS_DATA = [
         moves: "1.e4 b6 2.d4 Bb7 3.Nc3 g6 4.Nf3 Bg7 5.Bg5 Nf6?! 6.e5! Nh5"
       }
     ]
+  },
+  {
+    id: "destruye-sistema-londres",
+    category: "Especiales",
+    name: "Destruye el Sistema Londres (negras)",
+    eco: "D02",
+    side: "b",
+    difficulty: "Intermedio",
+    style: "Ataque rápido",
+    ratingRange: "800 - 2200",
+    summary: "Plan agresivo para destruir el Sistema Londres. Golpeamos el centro temprano con c5, desarrollamos los caballos y lanzamos la Dama a b6 para aprovechar la debilidad dejada por el alfil en f4.",
+    plansWhite: [
+      "Intentar consolidar el centro con c3 y e3.",
+      "Luchar por defender el flanco de dama que queda expuesto."
+    ],
+    plansBlack: [
+      "Golpear el centro en la segunda jugada con c5.",
+      "Sacar la Dama a b6 para atacar b2.",
+      "Avanzar c4 para ganar espacio si la dama blanca va a b3.",
+      "Ubicar el Alfil en f5 para dominar el tablero."
+    ],
+    keySquares: ["b2", "b6", "c4", "f5"],
+    moves: [
+      { san: "d4", from: "d2", to: "d4", name: "Apertura de Peón Dama", comment: "Las blancas toman el centro." },
+      { san: "d5", from: "d7", to: "d5", name: "Respuesta central", comment: "Las negras igualan el control central." },
+      { san: "Bf4", from: "c1", to: "f4", name: "El Sistema Londres", comment: "El alfil sale temprano. Deja sólida la estructura, pero abandona el control de b2." },
+      { san: "c5", from: "c7", to: "c5", name: "¡Golpe al centro!", comment: "Atacamos la base d4 inmediatamente para desestabilizar el esquema." },
+      { san: "e3", from: "e2", to: "e3", name: "Defensa sólida", comment: "Las blancas construyen su pirámide." },
+      { san: "Nc6", from: "b8", to: "c6", name: "Presión a d4", comment: "Añadimos presión al centro." },
+      { san: "c3", from: "c2", to: "c3", name: "Pirámide del Londres", comment: "La clásica estructura de peones d4-e3-c3." },
+      { san: "Nf6", from: "g8", to: "f6", name: "Desarrollo", comment: "Caballo al centro, preparando acciones mayores." },
+      { san: "Nf3", from: "g1", to: "f3", name: "Desarrollo blanco", comment: "Las blancas continúan su plan." },
+      { san: "Qb6", from: "d8", to: "b6", name: "El ataque a b2", comment: "¡La clave del plan! La Dama ataca la debilidad en b2, forzando a las blancas a tomar decisiones incómodas.", arrows: [{ from: "b6", to: "b2", color: "#ef4444" }] },
+      { san: "Qb3", from: "d1", to: "b3", name: "Defensa blanca", comment: "Las blancas defienden b2 ofreciendo el cambio de damas." },
+      { san: "c4", from: "c5", to: "c4", name: "¡Ganancia de espacio!", comment: "En vez de cambiar, avanzamos el peón ahogando el flanco de dama blanco." },
+      { san: "Qc2", from: "b3", to: "c2", name: "Retirada", comment: "La dama blanca tiene que retroceder." },
+      { san: "Bf5", from: "c8", to: "f5", name: "¡El golpe maestro!", comment: "Una jugada brillante. Si las blancas capturan Qxf5, las negras responden Qxb2 ganando la torre limpia en a1.", arrows: [{ from: "f5", to: "c2", color: "#f97316" }] },
+      { san: "Qc1", from: "c2", to: "c1", name: "Retirada humillante", comment: "Las blancas no pueden capturar y deben esconderse pasivamente en c1." },
+      { san: "e6", from: "e7", to: "e6", name: "Desarrollo completo", comment: "Las negras aseguran su alfil, controlan el centro y tienen un flanco de dama dominado. Misión cumplida." }
+    ],
+    traps: [
+      {
+        title: "La trampa de Qxf5",
+        desc: "Si tras Bf5 las blancas juegan Qxf5, tú respondes Qxb2. La torre de a1 está atrapada y no puede ser salvada, obteniendo una ventaja decisiva.",
+        moves: "1.d4 d5 2.Bf4 c5 3.e3 Nc6 4.c3 Nf6 5.Nf3 Qb6 6.Qb3 c4 7.Qc2 Bf5 8.Qxf5 Qxb2 9.Kd1 Qxa1"
+      }
+    ]
   }
 ];
 

@@ -145,12 +145,6 @@ def run():
                 print(" Presiona Ctrl+C para detener el servidor.")
                 print("=" * 60)
 
-                # Intentar abrir el navegador
-                try:
-                    webbrowser.open(url)
-                except Exception:
-                    pass
-
                 httpd.serve_forever()
                 break
         except OSError:
