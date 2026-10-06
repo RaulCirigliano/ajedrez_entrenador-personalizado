@@ -1691,6 +1691,191 @@ const OPENINGS_DATA = [
       }
     ]
   }
+  },
+  {
+    id: "destruye-hipopotamo",
+    category: "Especiales",
+    name: "Destruye el Hipopótamo (blancas)",
+    eco: "B00",
+    side: "w",
+    difficulty: "Avanzado",
+    style: "Ataque posicional y ruptura",
+    ratingRange: "1000 - 2400",
+    summary: "La Defensa Hipopótamo es ultra-pasiva. La clave es construir un súper-centro, desarrollar pacientemente y luego romper su caparazón con f4-f5.",
+    plansWhite: [
+      "Ocupar todo el centro disponible con e4, d4 y c4.",
+      "Desarrollar los caballos a c3 y f3.",
+      "Preparar la ruptura decisiva con f4 y f5 para aplastar la estructura negra."
+    ],
+    plansBlack: [
+      "Agazaparse en las tres primeras filas.",
+      "Esperar a que las blancas se sobre-extiendan para contraatacar."
+    ],
+    keySquares: ["f5", "e5", "d5"],
+    moves: [
+      { san: "e4", from: "e2", to: "e4", name: "Toma el centro", comment: "Principio básico." },
+      { san: "g6", from: "g7", to: "g6", name: "Fianchetto rey", comment: "Las negras inician su esquema." },
+      { san: "d4", from: "d2", to: "d4", name: "Centro ideal", comment: "Dominio central." },
+      { san: "Bg7", from: "f8", to: "g7", name: "Alfil fianchettado", comment: "Presiona a distancia." },
+      { san: "c4", from: "c2", to: "c4", name: "Súper centro (Paso 1)", comment: "Ganamos todo el espacio posible." },
+      { san: "d6", from: "d7", to: "d6", name: "Esquema pasivo", comment: "Estructura típica." },
+      { san: "Nc3", from: "b1", to: "c3", name: "Desarrollo", comment: "Defiende el centro." },
+      { san: "Nd7", from: "b8", to: "d7", name: "Caballo a d7", comment: "Evitan bloquear sus peones." },
+      { san: "f4", from: "f2", to: "f4", name: "Preparando la tormenta (Paso 2)", comment: "La jugada clave del Ataque Austríaco contra esquemas pasivos." },
+      { san: "e6", from: "e7", to: "e6", name: "Pequeño centro", comment: "Controlan d5." },
+      { san: "Nf3", from: "g1", to: "f3", name: "Desarrollo", comment: "Caballo al centro." },
+      { san: "Ne7", from: "g8", to: "e7", name: "Caballo a e7", comment: "El Hipopótamo toma forma." },
+      { san: "Bd3", from: "f1", to: "d3", name: "Alfil activo", comment: "Apunta al flanco de rey." },
+      { san: "b6", from: "b7", to: "b6", name: "Fianchetto dama", comment: "Preparan Bb7." },
+      { san: "O-O", from: "e1", to: "g1", name: "Seguridad", comment: "Rey a salvo." },
+      { san: "Bb7", from: "c8", to: "b7", name: "El Hipopótamo completo", comment: "Las negras han completado su formación sin cruzar la tercera fila." },
+      { san: "Be3", from: "c1", to: "e3", name: "Última pieza menor", comment: "Desarrollo completado." },
+      { san: "O-O", from: "e8", to: "g8", name: "Enroque negro", comment: "El rey se esconde." },
+      { san: "Qe1", from: "d1", to: "e1", name: "La maniobra letal (Paso 3)", comment: "La Dama se dirige a h4 para iniciar el ataque final." },
+      { san: "h6", from: "h7", to: "h6", name: "Prevención", comment: "Evita saltos a g5." },
+      { san: "f5", from: "f4", to: "f5", name: "¡La Ruptura!", comment: "Llegó el momento. Rompemos la estructura negra aprovechando nuestra ventaja de espacio." }
+    ],
+    traps: []
+  },
+  {
+    id: "destruye-carokann-fantasia",
+    category: "Especiales",
+    name: "Destruye la Caro-Kann (Fantasía)",
+    eco: "B12",
+    side: "w",
+    difficulty: "Intermedio",
+    style: "Táctico y agresivo",
+    ratingRange: "800 - 2000",
+    summary: "El Ataque Fantasía (3.f3) saca a los jugadores de Caro-Kann de su zona de confort, llevando a posiciones muy abiertas con trampas letales tempranas.",
+    plansWhite: [
+      "Sostener el centro con f3.",
+      "Si capturan en e4, retomar con f-peón y usar la columna f semi-abierta.",
+      "Desarrollar rápido y buscar sacrificios en f7."
+    ],
+    plansBlack: [
+      "Intentar desafiar el centro.",
+      "Aprovechar la debilidad en la diagonal del rey blanco."
+    ],
+    keySquares: ["f7", "e4", "d4"],
+    moves: [
+      { san: "e4", from: "e2", to: "e4", name: "Peón de rey", comment: "Iniciativa blanca." },
+      { san: "c6", from: "c7", to: "c6", name: "Defensa Caro-Kann", comment: "Las negras preparan d5." },
+      { san: "d4", from: "d2", to: "d4", name: "Centro clásico", comment: "Ocupamos el centro." },
+      { san: "d5", from: "d7", to: "d5", name: "El desafío", comment: "Golpean e4." },
+      { san: "f3", from: "f2", to: "f3", name: "¡Ataque Fantasía!", comment: "Defendemos e4 con f3. Esto sorprende a la mayoría de jugadores." },
+      { san: "dxe4", from: "d5", to: "e4", name: "Captura", comment: "Las negras aceptan el reto." },
+      { san: "fxe4", from: "f3", to: "e4", name: "Recaptura", comment: "Se abre la columna F para nuestra torre tras el enroque." },
+      { san: "e5", from: "e7", to: "e5", name: "Golpe al centro", comment: "Jugada típica para aprovechar la diagonal abierta." },
+      { san: "Nf3", from: "g1", to: "f3", name: "Desarrollo", comment: "Defiende d4 y ataca e5." },
+      { san: "Bg4", from: "c8", to: "g4", name: "Clavada", comment: "Las negras clavan el caballo." },
+      { san: "Bc4", from: "f1", to: "c4", name: "La Trampa (Paso 1)", comment: "Apuntamos directamente al punto débil f7. Las negras creen que pueden ganar un peón...", arrows: [{from: "c4", to: "f7", color: "#ef4444"}] },
+      { san: "Nd7", from: "b8", to: "d7", name: "Desarrollo inocente", comment: "Las negras se preparan. Si jugaran exd4, la trampa igual funciona." },
+      { san: "Bxf7+", from: "c4", to: "f7", name: "¡Sacrificio Destructor!", comment: "Boom. Exponemos al rey." },
+      { san: "Kxf7", from: "e8", to: "f7", name: "Rey expuesto", comment: "Forzado." },
+      { san: "Ng5+", from: "f3", to: "g5", name: "Jaque doble", comment: "Jaque y atacamos el alfil de g4 con la dama." },
+      { san: "Ke8", from: "f7", to: "e8", name: "Retirada", comment: "El rey debe huir." },
+      { san: "Qxg4", from: "d1", to: "g4", name: "Ventaja decisiva", comment: "Recuperamos la pieza, las negras perdieron el enroque y tenemos un ataque feroz." }
+    ],
+    traps: [
+      {
+        title: "La trampa del Alfil en f7",
+        desc: "Si las negras intentan aferrarse a la clavada o capturan en d4 prematuramente, el sacrificio Bxf7+ gana material por la descubierta con Ng5+ y Qxg4.",
+        moves: "1.e4 c6 2.d4 d5 3.f3 dxe4 4.fxe4 e5 5.Nf3 Bg4 6.Bc4 exd4 7.Bxf7+ Kxf7 8.Ng5+ Ke8 9.Qxg4"
+      }
+    ]
+  },
+  {
+    id: "destruye-francesa-milner",
+    category: "Especiales",
+    name: "Destruye la Francesa (Gambito Milner-Barry)",
+    eco: "C02",
+    side: "w",
+    difficulty: "Intermedio",
+    style: "Gambito de ataque",
+    ratingRange: "1000 - 2200",
+    summary: "Sacrificamos nuestro peón central 'd4' para ganar un desarrollo arrollador. Si las negras son codiciosas y capturan todo, caen en un ataque demoledor en el flanco de dama.",
+    plansWhite: [
+      "Establecer la cuña de peones e5.",
+      "Sacrificar d4 a cambio de tiempos de desarrollo.",
+      "Usar los caballos y la torre en la columna C para atacar la dama negra."
+    ],
+    plansBlack: [
+      "Presionar d4 y e5 incansablemente.",
+      "Intentar sobrevivir con el peón de ventaja."
+    ],
+    keySquares: ["d4", "c7", "c3"],
+    moves: [
+      { san: "e4", from: "e2", to: "e4", name: "Peón rey", comment: "Iniciativa." },
+      { san: "e6", from: "e7", to: "e6", name: "Defensa Francesa", comment: "Sólida pero estrecha." },
+      { san: "d4", from: "d2", to: "d4", name: "Centro blanco", comment: "Las blancas dominan el espacio." },
+      { san: "d5", from: "d7", to: "d5", name: "Ataque al centro", comment: "Las negras golpean e4." },
+      { san: "e5", from: "e4", to: "e5", name: "Variante del Avance", comment: "Cerramos el centro y ganamos espacio." },
+      { san: "c5", from: "c7", to: "c5", name: "Presión a d4", comment: "Típico contraataque francés." },
+      { san: "c3", from: "c2", to: "c3", name: "Cadena de peones", comment: "Sostenemos d4." },
+      { san: "Nc6", from: "b8", to: "c6", name: "Más presión", comment: "Atacan d4 por segunda vez." },
+      { san: "Nf3", from: "g1", to: "f3", name: "Defensa", comment: "Defendemos con el caballo." },
+      { san: "Qb6", from: "d8", to: "b6", name: "Presión máxima", comment: "Tres atacantes sobre d4." },
+      { san: "Bd3", from: "f1", to: "d3", name: "¡La Trampa! (Gambito Milner-Barry)", comment: "En vez de defender d4, desarrollamos el alfil y ofrecemos el peón a cambio de actividad." },
+      { san: "cxd4", from: "c5", to: "d4", name: "Captura", comment: "Las negras aceptan el reto." },
+      { san: "cxd4", from: "c3", to: "d4", name: "Recaptura", comment: "Mantenemos tensión." },
+      { san: "Bd7", from: "c8", to: "d7", name: "Preparación", comment: "Las negras evitan Bb5+ antes de capturar el peón." },
+      { san: "O-O", from: "e1", to: "g1", name: "Enroque", comment: "¡Ignoramos d4 de nuevo! Seguridad y torre al centro." },
+      { san: "Nxd4", from: "c6", to: "d4", name: "Las negras muerden el anzuelo", comment: "Ganan el peón, pero quedan horriblemente retrasadas en desarrollo." },
+      { san: "Nxd4", from: "f3", to: "d4", name: "Cambio", comment: "Simplificando para abrir el centro." },
+      { san: "Qxd4", from: "b6", to: "d4", name: "La Dama en peligro", comment: "Las negras se creen victoriosas con un peón más." },
+      { san: "Nc3", from: "b1", to: "c3", name: "Desarrollo con ganancia de tiempo", comment: "Desarrollamos la última pieza. La dama negra está mal ubicada." },
+      { san: "Qxe5", from: "d4", to: "e5", name: "Codicia fatal", comment: "Si las negras intentan comer e5..." },
+      { san: "Re1", from: "f1", to: "e1", name: "Ataque por Rayos X", comment: "La torre ataca a la dama, con el rey detrás." },
+      { san: "Qd6", from: "e5", to: "d6", name: "Retirada", comment: "La dama huye." },
+      { san: "Nb5", from: "c3", to: "b5", name: "¡Ataque doble!", comment: "Atacamos la dama y la casilla c7. Las negras están perdidas." }
+    ],
+    traps: []
+  },
+  {
+    id: "destruye-escandinava",
+    category: "Especiales",
+    name: "Destruye la Escandinava (Ataque Agresivo)",
+    eco: "B01",
+    side: "w",
+    difficulty: "Intermedio",
+    style: "Ataque al rey",
+    ratingRange: "800 - 2000",
+    summary: "Castigamos la prematura salida de la Dama negra. Jugaremos agresivamente en el flanco de rey para asfixiar a su alfil y preparar letales descubiertas.",
+    plansWhite: [
+      "Ganar tiempos atacando la dama negra con Nc3.",
+      "Desarrollar el flanco de rey y ganar espacio rápidamente con g4.",
+      "Usar el caballo en e5 para presionar f7 y restringir a las negras."
+    ],
+    plansBlack: [
+      "Intentar asegurar la posición de su dama y alfil de casillas claras.",
+      "Buscar solidez con c6 y e6."
+    ],
+    keySquares: ["e5", "g4", "f7"],
+    moves: [
+      { san: "e4", from: "e2", to: "e4", name: "Apertura", comment: "Peón rey." },
+      { san: "d5", from: "d7", to: "d5", name: "Defensa Escandinava", comment: "Las negras atacan el centro inmediatamente." },
+      { san: "exd5", from: "e4", to: "d5", name: "Captura", comment: "Lo más crítico." },
+      { san: "Qxd5", from: "d8", to: "d5", name: "Dama prematura", comment: "La dama sale demasiado pronto." },
+      { san: "Nc3", from: "b1", to: "c3", name: "Ganancia de tiempo", comment: "Desarrollo atacando la dama." },
+      { san: "Qa5", from: "d5", to: "a5", name: "Retirada típica", comment: "La retirada más común en la Escandinava." },
+      { san: "d4", from: "d2", to: "d4", name: "Centro blanco", comment: "Dominio central." },
+      { san: "Nf6", from: "g8", to: "f6", name: "Desarrollo negro", comment: "El caballo apunta al centro." },
+      { san: "Nf3", from: "g1", to: "f3", name: "Desarrollo blanco", comment: "Sólido." },
+      { san: "c6", from: "c7", to: "c6", name: "Solidez y retirada", comment: "Preparan un refugio para la dama en c7." },
+      { san: "Bc4", from: "f1", to: "c4", name: "Alfil agresivo", comment: "Apuntando a f7 y cediendo desarrollo." },
+      { san: "Bg4", from: "c8", to: "g4", name: "Clavada", comment: "El plan principal de las negras: clavar el caballo." },
+      { san: "h3", from: "h2", to: "h3", name: "Cuestionando al alfil", comment: "Obligamos a tomar una decisión." },
+      { san: "Bh5", from: "g4", to: "h5", name: "Retirada terca", comment: "Las negras mantienen la clavada." },
+      { san: "g4", from: "g2", to: "g4", name: "¡Expansión agresiva!", comment: "Rompemos la clavada y asfixiamos al alfil negro." },
+      { san: "Bg6", from: "h5", to: "g6", name: "El Alfil encerrado", comment: "El alfil queda muy pasivo en g6." },
+      { san: "Ne5", from: "f3", to: "e5", name: "El Caballo pulpo", comment: "Ocupa una casilla central fantástica, amenaza c Nxg6 dañando la estructura y apunta a f7." },
+      { san: "e6", from: "e7", to: "e6", name: "Defensa negra", comment: "Sólida, preparando el desarrollo." },
+      { san: "h4", from: "h3", to: "h4", name: "Ataque asfixiante", comment: "Amenaza atrapar definitivamente al alfil con h5." },
+      { san: "Nbd7", from: "b8", to: "d7", name: "Desarrollo", comment: "Las negras intentan cambiar el molesto caballo." },
+      { san: "Nxd7", from: "e5", to: "d7", name: "Intercambio oportuno", comment: "Eliminamos a su defensor antes de seguir atacando." }
+    ],
+    traps: []
+  }
 ];
 
 if (typeof module !== 'undefined' && module.exports) {
