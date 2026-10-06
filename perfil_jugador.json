@@ -1,12 +1,36 @@
 {
-  "name": "Jugador",
-  "elo": 1200,
-  "gamesPlayed": 0,
-  "wins": 0,
+  "name": "Raul Cirigliano",
+  "elo": 1204,
+  "gamesPlayed": 2,
+  "wins": 2,
   "losses": 0,
   "draws": 0,
-  "history": [],
-  "openingStats": {},
+  "history": [
+    {
+      "date": "2026-10-06T13:25:50.508Z",
+      "openingId": "italiana-dos-caballos-fegatello",
+      "openingName": "Italiana: Dos Caballos (Ataque Fegatello) (blancas)",
+      "aiLevelId": 1,
+      "aiElo": 600,
+      "result": "win",
+      "resultText": "¡Ganaste!",
+      "userEloBefore": 1203,
+      "userEloAfter": 1204,
+      "eloChange": 1
+    }
+  ],
+  "openingStats": {
+    "italiana-giuoco-piano": {
+      "wins": 1,
+      "losses": 0,
+      "draws": 0
+    },
+    "italiana-dos-caballos-fegatello": {
+      "wins": 1,
+      "losses": 0,
+      "draws": 0
+    }
+  },
   "practiceStats": {},
-  "lastUpdated": "2026-10-06T12:00:00.000Z"
+  "lastUpdated": "2026-10-06T13:26:00.655Z"
 }
