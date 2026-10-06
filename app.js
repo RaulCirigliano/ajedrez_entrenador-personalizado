@@ -449,6 +449,35 @@ if (btnSaveProfile) {
 }
 // --- END USER PROFILE SYSTEM ---
 
+const btnGitPush = document.getElementById('btn-git-push');
+if (btnGitPush) {
+  btnGitPush.addEventListener('click', async () => {
+    const originalText = btnGitPush.textContent;
+    btnGitPush.textContent = 'Subiendo...';
+    btnGitPush.disabled = true;
+    
+    // Primero guardar localmente
+    userProfile.name = inputProfileName.value || 'Jugador';
+    userProfile.elo = parseInt(inputProfileElo.value, 10) || 1200;
+    await saveProfile();
+
+    try {
+      const res = await fetch('/api/git-push', { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        alert("✅ " + data.message);
+      } else {
+        alert("❌ Error: " + data.message);
+      }
+    } catch (e) {
+      alert("❌ No se pudo conectar al servidor local para subir a Git. Asegúrate de ejecutar 'python3 server.py' y estar en http://localhost:8080");
+    } finally {
+      btnGitPush.textContent = originalText;
+      btnGitPush.disabled = false;
+    }
+  });
+}
+
 
   // Application State
   const state = {

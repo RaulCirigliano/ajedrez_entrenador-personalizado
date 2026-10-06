@@ -11,6 +11,7 @@ import webbrowser
 import os
 import sys
 import json
+import subprocess
 
 PORT = 8080
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
@@ -65,6 +66,32 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_POST(self):
         clean_path = self.path.split('?')[0]
+        if clean_path == '/api/git-push':
+            try:
+                subprocess.run(['git', 'add', 'perfil_jugador.json'], check=True, capture_output=True)
+                res_commit = subprocess.run(['git', 'commit', '-m', 'Auto-guardado: Actualizar ELO e historial'], capture_output=True)
+                res_push = subprocess.run(['git', 'push'], check=True, capture_output=True)
+                
+                msg = "Progreso subido a Git correctamente."
+                if res_commit.returncode != 0 and b"nothing to commit" in res_commit.stdout:
+                    msg = "No hay cambios nuevos para subir, ya está actualizado."
+
+                response_bytes = json.dumps({"status": "ok", "message": msg}).encode('utf-8')
+                self.send_response(200)
+            except subprocess.CalledProcessError as e:
+                err_msg = e.stderr.decode('utf-8', errors='replace') if e.stderr else str(e)
+                response_bytes = json.dumps({"status": "error", "message": f"Error de Git: {err_msg}"}).encode('utf-8')
+                self.send_response(500)
+            except Exception as e:
+                response_bytes = json.dumps({"status": "error", "message": str(e)}).encode('utf-8')
+                self.send_response(500)
+
+            self.send_header('Content-Type', 'application/json; charset=utf-8')
+            self.send_header('Content-Length', str(len(response_bytes)))
+            self.end_headers()
+            self.wfile.write(response_bytes)
+            return
+
         if clean_path in ('/api/save-profile', '/api/profile', '/save-profile'):
             try:
                 content_length = int(self.headers.get('Content-Length', 0))

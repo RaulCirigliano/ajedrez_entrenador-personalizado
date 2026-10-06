@@ -332,7 +332,7 @@
         <!-- SECCIÓN 1: Perfil Básico -->
         <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
           <h3 style="font-size: 1rem; margin-bottom: 0.8rem; color: var(--text-color);">Mis Datos</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 0.5rem; align-items: end;">
             <div>
               <label for="input-profile-name" style="display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 0.3rem;">Nombre / Alias</label>
               <input type="text" id="input-profile-name" class="btn" style="width: 100%; text-align: left; background: var(--bg-surface); cursor: text;" placeholder="Ej: Maestro">
@@ -342,7 +342,10 @@
               <input type="number" id="input-profile-elo" class="btn" style="width: 100%; text-align: left; background: var(--bg-surface); cursor: text;" min="400" max="3000" step="10">
             </div>
             <div>
-              <button id="btn-save-profile" class="btn btn-primary" style="padding: 0.6rem 1rem;">Guardar</button>
+              <button id="btn-save-profile" class="btn btn-primary" style="padding: 0.6rem 1rem;" title="Guardar localmente">Guardar</button>
+            </div>
+            <div>
+              <button id="btn-git-push" class="btn" style="padding: 0.6rem 1rem; background-color: #3b82f6; color: white;" title="Subir progreso y ELO a GitHub">☁️ Subir a Git</button>
             </div>
           </div>
           <div style="margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
