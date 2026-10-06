@@ -11,16 +11,18 @@ Esta nueva etapa se desarrolla en la carpeta `ajedrez_entrenador-personalizado` 
 
 ## Nuevas Funcionalidades a Desarrollar (Fase Actual)
 
-### 1. Sistema de Perfil y ELO Local
+### 1. Sistema de Perfil y ELO Local (Sincronizado vía Git)
 * El usuario tendrá un perfil (nombre, ELO inicial).
 * La aplicación registrará las partidas jugadas en "Modo Libre" contra la máquina.
 * El sistema ajustará el ELO del usuario basado en si gana, pierde o empata contra los distintos niveles de la inteligencia artificial.
-* Almacenamiento persistente en el navegador usando `localStorage`.
+* Almacenamiento persistente dual:
+  * En el navegador mediante `localStorage` para carga instantánea.
+  * En el archivo versionado `perfil_jugador.json` gestionado por `server.py`, permitiendo sincronizar el ELO, historial de partidas y estadísticas de prácticas entre diferentes dispositivos (PC y netbook) a través de Git (`git push` / `git pull`).
 
 ### 2. Panel de Estadísticas y Dominio (Dashboard)
 * Informe detallado de rendimiento:
   * **Aperturas dominadas:** Basado en la tasa de éxito de la práctica activa.
-  * **Historial de Partidas:** Registro de victorias, empates y derrotas.
+  * **Historial de Partidas:** Registro de victorias, empates y derrotas, más tabla de últimas partidas con variación de ELO.
   * **Prácticas finalizadas:** Cantidad de veces que se ha completado cada línea teórica.
 
 ### 3. Integración de "Coach Virtual" (Ollama Local)
@@ -30,15 +32,18 @@ Esta nueva etapa se desarrolla en la carpeta `ajedrez_entrenador-personalizado` 
 * Todo mantendrá el principio de privacidad total sin usar APIs en la nube como OpenAI o Gemini.
 
 ## Arquitectura y Archivos (Actual)
-* `index.html`: UI principal, se le añadirán los modales o pestañas del Dashboard y Perfil.
-* `app.js`: Lógica principal. Deberá incorporar las funciones de actualización de ELO, tracking de partidas y la conexión `fetch` a Ollama.
-* `openings-data.js`: Base de datos de aperturas (se mantiene).
-* `chess-engine.js` / `ai-engine.js`: Motor de ajedrez e IA básica (se integrará el cálculo de resultados al final del mate o tablas para el ELO).
+* `index.html`: UI principal con selector accesible, Dashboard de Estadísticas e Historial de Partidas y modal de Perfil.
+* `app.js`: Lógica principal, cálculo de variación de ELO, tracking de partidas en historial, sincronización con `perfil_jugador.json` y conexión fetch a Ollama.
+* `server.py`: Servidor HTTP en Python con endpoints para servir y guardar `perfil_jugador.json` y cabeceras anticaché.
+* `perfil_jugador.json`: Archivo con el ELO, partidas jugadas, historial y estadísticas del usuario rastreado por Git para juego multiplataforma.
+* `openings-data.js`: Base de datos de aperturas (incluyendo categoría Especiales "Destruye xxxx").
+* `chess-engine.js` / `ai-engine.js`: Motor de ajedrez e IA básica con niveles de dificultad y cálculo de resultados.
 
 ## Próximos Pasos de Implementación
-1. ~~Crear la UI del Perfil/Dashboard en `index.html` e implementar el CRUD en `localStorage`.~~ (¡COMPLETADO y corregido error de importación de ELO antiguo!)
+1. ~~Crear la UI del Perfil/Dashboard en `index.html` e implementar el CRUD en `localStorage`.~~ (¡COMPLETADO!)
 2. ~~Actualizar la lógica de `ai-engine.js` / `app.js` para registrar el fin de la partida y calcular la variación de ELO.~~ (¡COMPLETADO!)
-3. ~~Crear el módulo `coach.js` (o funciones en `app.js`) para estructurar el *prompt* con las estadísticas y hacer el *fetch* a Ollama.~~ (¡COMPLETADO! La app ya envía el perfil al coach local).
+3. ~~Crear el módulo `coach.js` (o funciones en `app.js`) para estructurar el *prompt* con las estadísticas y hacer el *fetch* a Ollama.~~ (¡COMPLETADO!)
+4. ~~Persistencia permanente de ELO e historial en `perfil_jugador.json` sincronizado vía Git entre máquinas.~~ (¡COMPLETADO!)
 
 ## Sincronización de Proyectos
 **Nota Importante:** Este proyecto ("Ajedrez - Entrenador Personalizado") y la aplicación web base ("aperturas_ajedrez") comparten el mismo núcleo. A partir de ahora, cualquier mejora en la interfaz de usuario, corrección de errores generales o refactorización del código base debe **aplicarse en ambos repositorios** para mantenerlos sincronizados. 

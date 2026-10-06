@@ -312,7 +312,7 @@
   <script src="sound.js"></script>
   <script src="openings-data.js?v=2"></script>
   <script src="board-ui.js"></script>
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 
   <!-- Modal del Perfil / Dashboard -->
   <div id="profile-modal" class="modal-overlay" style="display: none;">
@@ -344,6 +344,10 @@
             <div>
               <button id="btn-save-profile" class="btn btn-primary" style="padding: 0.6rem 1rem;">Guardar</button>
             </div>
+          </div>
+          <div style="margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <span id="sync-status" style="font-size: 0.75rem; color: #10b981;">● Sincronizado con perfil_jugador.json</span>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Sincronización Git automática en perfil_jugador.json</span>
           </div>
         </div>
 
@@ -383,6 +387,26 @@
                 </tr>
               </thead>
               <tbody id="dashboard-openings-body">
+                <!-- Se llenará con JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 3.5: Historial Reciente de Partidas -->
+        <div>
+          <h3 style="font-size: 1rem; margin-bottom: 0.8rem; color: var(--text-color);">Historial Reciente de Partidas (Modo Libre)</h3>
+          <div style="background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-color); overflow-x: auto; max-height: 220px; overflow-y: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+              <thead>
+                <tr style="background: rgba(0,0,0,0.2); text-align: left;">
+                  <th style="padding: 0.8rem; border-bottom: 1px solid var(--border-color);">Fecha</th>
+                  <th style="padding: 0.8rem; border-bottom: 1px solid var(--border-color);">Apertura / Rival</th>
+                  <th style="padding: 0.8rem; border-bottom: 1px solid var(--border-color); text-align: center;">Resultado</th>
+                  <th style="padding: 0.8rem; border-bottom: 1px solid var(--border-color); text-align: right;">Variación ELO</th>
+                </tr>
+              </thead>
+              <tbody id="dashboard-history-body">
                 <!-- Se llenará con JS -->
               </tbody>
             </table>

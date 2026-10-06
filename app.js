@@ -27,7 +27,7 @@ function processGameOverElo() {
   }
 
   // Calculate ELO
-  const aiEloMap = { 1: 800, 2: 1200, 3: 1600, 4: 2000, 5: 2500 };
+  const aiEloMap = { 1: 600, 2: 900, 3: 1200, 4: 1500, 5: 1800, 6: 2200 };
   const aiElo = aiEloMap[state.aiLevelId] || 1200;
   
   const expectedScore = 1 / (1 + Math.pow(10, (aiElo - userProfile.elo) / 400));
@@ -44,11 +44,28 @@ function processGameOverElo() {
 
   // Record opening-specific stats
   if (!userProfile.openingStats) userProfile.openingStats = {};
-  const opId = state.currentOpening.id;
+  const opId = (state.currentOpening && state.currentOpening.id) || 'libre';
+  const opName = (state.currentOpening && state.currentOpening.name) || 'Tablero Libre';
   if (!userProfile.openingStats[opId]) userProfile.openingStats[opId] = { wins: 0, losses: 0, draws: 0 };
   if (result === 1) userProfile.openingStats[opId].wins++;
   else if (result === 0) userProfile.openingStats[opId].losses++;
   else userProfile.openingStats[opId].draws++;
+
+  // Record match history
+  if (!userProfile.history) userProfile.history = [];
+  userProfile.history.unshift({
+    date: new Date().toISOString(),
+    openingId: opId,
+    openingName: opName,
+    aiLevelId: state.aiLevelId,
+    aiElo: aiElo,
+    result: result === 1 ? 'win' : (result === 0 ? 'loss' : 'draw'),
+    resultText: resultText,
+    userEloBefore: oldElo,
+    userEloAfter: userProfile.elo,
+    eloChange: eloChange
+  });
+  if (userProfile.history.length > 50) userProfile.history.pop();
   
   saveProfile();
   gameProcessed = true;
@@ -165,33 +182,139 @@ let userProfile = {
   wins: 0,
   losses: 0,
   draws: 0,
-  history: []
+  history: [],
+  openingStats: {},
+  practiceStats: {},
+  lastUpdated: null
 };
 
-function loadProfile() {
-  const p = localStorage.getItem('chess_coach_profile');
-  if (p) {
+async function loadProfile() {
+  // 1. Cargar desde localStorage para disponibilidad instantánea en UI
+  let localData = null;
+  const rawLocal = localStorage.getItem('chessUserProfile') || localStorage.getItem('chess_coach_profile');
+  if (rawLocal) {
     try {
-      userProfile = JSON.parse(p);
+      localData = JSON.parse(rawLocal);
     } catch (e) {
-      console.error("Error loading profile", e);
-    }
-  } else {
-    // Importar el ELO antiguo de la otra app para no perderlo
-    const oldElo = localStorage.getItem('chess_user_elo');
-    if (oldElo) {
-      userProfile.elo = parseInt(oldElo, 10) || 1200;
-      saveProfile(); // Guardarlo en el nuevo formato
+      console.error("Error al leer perfil de localStorage", e);
     }
   }
+
+  // Compatibilidad: migrar ELO antiguo si existía
+  const oldElo = localStorage.getItem('chess_user_elo');
+  if (!localData && oldElo) {
+    localData = {
+      name: 'Jugador',
+      elo: parseInt(oldElo, 10) || 1200,
+      gamesPlayed: 0,
+      wins: 0,
+      losses: 0,
+      draws: 0,
+      history: [],
+      openingStats: {},
+      practiceStats: {}
+    };
+  }
+
+  if (localData) {
+    userProfile = Object.assign({}, userProfile, localData);
+    if (!userProfile.history) userProfile.history = [];
+    if (!userProfile.openingStats) userProfile.openingStats = {};
+    if (!userProfile.practiceStats) userProfile.practiceStats = {};
+    updateProfileUI();
+  }
+
+  // 2. Cargar perfil_jugador.json desde el servidor/archivo para sincronizar entre máquinas
+  try {
+    const res = await fetch(`perfil_jugador.json?t=${Date.now()}`);
+    if (res.ok) {
+      const fileData = await res.json();
+      if (fileData && typeof fileData === 'object') {
+        const fileGames = fileData.gamesPlayed || 0;
+        const localGames = (localData && localData.gamesPlayed) || 0;
+        const fileTime = fileData.lastUpdated ? new Date(fileData.lastUpdated).getTime() : 0;
+        const localTime = (localData && localData.lastUpdated) ? new Date(localData.lastUpdated).getTime() : 0;
+
+        let shouldUseFile = false;
+        if (!localData) {
+          shouldUseFile = true;
+        } else if (fileGames > localGames) {
+          shouldUseFile = true;
+        } else if (fileTime > localTime && fileGames >= localGames) {
+          shouldUseFile = true;
+        }
+
+        if (shouldUseFile) {
+          userProfile = Object.assign({}, userProfile, fileData);
+          if (!userProfile.history) userProfile.history = [];
+          if (!userProfile.openingStats) userProfile.openingStats = {};
+          if (!userProfile.practiceStats) userProfile.practiceStats = {};
+
+          // Actualizar localStorage con los datos del repositorio
+          localStorage.setItem('chessUserProfile', JSON.stringify(userProfile));
+          localStorage.setItem('chess_coach_profile', JSON.stringify(userProfile));
+
+          // Sincronizar estadísticas de práctica si vienen en el archivo
+          if (fileData.practiceStats && Object.keys(fileData.practiceStats).length > 0) {
+            try {
+              const currentPract = getProgressStats();
+              const mergedPract = Object.assign({}, fileData.practiceStats, currentPract);
+              localStorage.setItem('chess_openings_stats', JSON.stringify(mergedPract));
+            } catch (err) {}
+          }
+        } else if (localData && (localGames > fileGames || localTime > fileTime)) {
+          // El navegador tiene cambios más recientes no guardados en el archivo: sincronizar al archivo
+          saveProfile();
+        }
+      }
+    }
+  } catch (err) {
+    console.log("No se pudo conectar con perfil_jugador.json (modo offline), usando localStorage.");
+  }
+
   updateProfileUI();
+  populateDashboard();
 }
 
-function saveProfile() {
+async function saveProfile() {
+  userProfile.lastUpdated = new Date().toISOString();
+
+  // Guardar también las estadísticas de práctica en el perfil
+  try {
+    userProfile.practiceStats = getProgressStats();
+  } catch (e) {}
+
+  // 1. Guardar en localStorage bajo ambas claves para compatibilidad absoluta
   localStorage.setItem('chessUserProfile', JSON.stringify(userProfile));
-  updateProfileUI();
-}
+  localStorage.setItem('chess_coach_profile', JSON.stringify(userProfile));
 
+  updateProfileUI();
+
+  // 2. Guardar en perfil_jugador.json mediante el backend de server.py
+  try {
+    const res = await fetch('/api/save-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userProfile)
+    });
+    const syncStatusEl = document.getElementById('sync-status');
+    if (syncStatusEl) {
+      if (res.ok) {
+        syncStatusEl.textContent = '● Guardado en perfil_jugador.json (listo para Git)';
+        syncStatusEl.style.color = '#10b981';
+      } else {
+        syncStatusEl.textContent = '○ Guardado localmente (Servidor no respondió)';
+        syncStatusEl.style.color = '#f59e0b';
+      }
+    }
+  } catch (e) {
+    const syncStatusEl = document.getElementById('sync-status');
+    if (syncStatusEl) {
+      syncStatusEl.textContent = '○ Guardado en navegador (Servidor Python inactivo)';
+      syncStatusEl.style.color = '#f59e0b';
+    }
+  }
+}
 
 function populateDashboard() {
   // Update Global Stats
@@ -202,57 +325,87 @@ function populateDashboard() {
 
   // Update Openings Table
   const tbody = document.getElementById('dashboard-openings-body');
-  if (!tbody) return;
-  tbody.innerHTML = '';
+  if (tbody) {
+    tbody.innerHTML = '';
 
-  const practiceStats = getProgressStats(); // from existing practice mode
-  const gameStats = userProfile.openingStats || {};
+    const practiceStats = getProgressStats(); // from existing practice mode
+    const gameStats = userProfile.openingStats || {};
 
-  // Find all openings the user has interacted with
-  const interactedIds = new Set([...Object.keys(practiceStats), ...Object.keys(gameStats)]);
-  
-  if (interactedIds.size === 0) {
-    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 1rem; color: var(--text-muted);">Aún no tienes registros. ¡Completa una práctica o juega una partida!</td></tr>`;
-    return;
+    // Find all openings the user has interacted with
+    const interactedIds = new Set([...Object.keys(practiceStats), ...Object.keys(gameStats)]);
+    
+    if (interactedIds.size === 0) {
+      tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 1rem; color: var(--text-muted);">Aún no tienes registros. ¡Completa una práctica o juega una partida!</td></tr>`;
+    } else {
+      // Sort by total games + practices
+      const rowsData = Array.from(interactedIds).map(id => {
+        const opening = OPENINGS_DATA.find(o => o.id === id);
+        const pStat = practiceStats[id] || { perfectRuns: 0 };
+        const gStat = gameStats[id] || { wins: 0, losses: 0, draws: 0 };
+        return {
+          name: opening ? opening.name : id,
+          eco: opening ? opening.eco : '?',
+          perfect: pStat.perfectRuns,
+          wins: gStat.wins,
+          draws: gStat.draws,
+          losses: gStat.losses,
+          totalActivity: pStat.perfectRuns + gStat.wins + gStat.draws + gStat.losses
+        };
+      });
+
+      rowsData.sort((a, b) => b.totalActivity - a.totalActivity);
+
+      rowsData.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border-color)';
+        tr.innerHTML = `
+          <td style="padding: 0.8rem;">
+            <div style="font-weight: bold;">${row.name}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${row.eco}</div>
+          </td>
+          <td style="padding: 0.8rem; text-align: center; font-weight: bold; color: #3b82f6;">
+            ${row.perfect > 0 ? row.perfect : '-'}
+          </td>
+          <td style="padding: 0.8rem; text-align: center;">
+            <span style="color: #10b981; font-weight: bold;">${row.wins}</span> /
+            <span style="color: #f59e0b;">${row.draws}</span> /
+            <span style="color: #ef4444;">${row.losses}</span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
   }
 
-  // Sort by total games + practices
-  const rowsData = Array.from(interactedIds).map(id => {
-    const opening = OPENINGS_DATA.find(o => o.id === id);
-    const pStat = practiceStats[id] || { perfectRuns: 0 };
-    const gStat = gameStats[id] || { wins: 0, losses: 0, draws: 0 };
-    return {
-      name: opening ? opening.name : id,
-      eco: opening ? opening.eco : '?',
-      perfect: pStat.perfectRuns,
-      wins: gStat.wins,
-      draws: gStat.draws,
-      losses: gStat.losses,
-      totalActivity: pStat.perfectRuns + gStat.wins + gStat.draws + gStat.losses
-    };
-  });
-
-  rowsData.sort((a, b) => b.totalActivity - a.totalActivity);
-
-  rowsData.forEach(row => {
-    const tr = document.createElement('tr');
-    tr.style.borderBottom = '1px solid var(--border-color)';
-    tr.innerHTML = `
-      <td style="padding: 0.8rem;">
-        <div style="font-weight: bold;">${row.name}</div>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">${row.eco}</div>
-      </td>
-      <td style="padding: 0.8rem; text-align: center; font-weight: bold; color: #3b82f6;">
-        ${row.perfect > 0 ? row.perfect : '-'}
-      </td>
-      <td style="padding: 0.8rem; text-align: center;">
-        <span style="color: #10b981; font-weight: bold;">${row.wins}</span> /
-        <span style="color: #f59e0b;">${row.draws}</span> /
-        <span style="color: #ef4444;">${row.losses}</span>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+  // Update Match History Table
+  const historyTbody = document.getElementById('dashboard-history-body');
+  if (historyTbody) {
+    historyTbody.innerHTML = '';
+    const historyList = userProfile.history || [];
+    if (historyList.length === 0) {
+      historyTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 1rem; color: var(--text-muted);">Aún no has jugado partidas puntuadas en Modo Libre.</td></tr>`;
+    } else {
+      historyList.slice(0, 15).forEach(item => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border-color)';
+        const dateStr = item.date ? new Date(item.date).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-';
+        const color = item.result === 'win' ? '#10b981' : (item.result === 'loss' ? '#ef4444' : '#f59e0b');
+        const sign = item.eloChange > 0 ? '+' : '';
+        tr.innerHTML = `
+          <td style="padding: 0.6rem 0.8rem; font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">${dateStr}</td>
+          <td style="padding: 0.6rem 0.8rem;">
+            <div style="font-weight: 600; font-size: 0.85rem;">${item.openingName || 'Partida Libre'}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">IA Nivel ${item.aiLevelId || '?'} (${item.aiElo || '?'} ELO)</div>
+          </td>
+          <td style="padding: 0.6rem 0.8rem; font-weight: bold; color: ${color}; text-align: center;">${item.resultText || item.result}</td>
+          <td style="padding: 0.6rem 0.8rem; text-align: right; font-weight: bold; color: ${color}; white-space: nowrap;">
+            ${sign}${item.eloChange} <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">(${item.userEloAfter})</span>
+          </td>
+        `;
+        historyTbody.appendChild(tr);
+      });
+    }
+  }
 }
 
 function updateProfileUI() {
@@ -396,6 +549,9 @@ if (btnSaveProfile) {
     } catch (e) {
       console.error("No se pudo guardar el progreso", e);
     }
+
+    // Sincronizar estadísticas en perfil_jugador.json
+    saveProfile();
   }
 
   function renderOpeningStatsUI() {

@@ -12,10 +12,10 @@ Este proyecto es una aplicación web interactiva diseñada para el estudio, prá
    - Juega desde cualquier posición teórica contra un motor de ajedrez integrado (niveles del 1 al 5).
    - **Sistema ELO Local:** Ganar o perder contra la máquina ajustará tu ELO automáticamente usando cálculos oficiales.
 
-3. **Dashboard y Estadísticas:**
-   - Panel de control que registra tus Victorias, Empates y Derrotas.
+3. **Dashboard, Estadísticas y Sincronización:**
+   - Panel de control que registra tus Victorias, Empates y Derrotas, además del historial reciente de partidas jugadas con sus variaciones de ELO.
    - Tabla dinámica de **Dominio de Aperturas** que muestra en cuáles fallas y cuáles dominas por completo.
-   - Todo se guarda permanentemente en tu computadora mediante `localStorage` (sin bases de datos externas).
+   - **Sincronización Dual (Navegador + Git):** Los datos se guardan en el navegador (`localStorage`) y en el archivo local `perfil_jugador.json` a través de `server.py`. Puedes hacer `git commit` y `git push`/`git pull` para mantener tu ELO y partidas sincronizadas entre varias computadoras (PC y netbook).
 
 4. **Coach Virtual (Integración con Ollama):**
    - Integración nativa con **Ollama** para analizar tus estadísticas.
@@ -33,7 +33,7 @@ Abre una terminal en esta carpeta (`/home/raul/Escritorio/proyectos/ajedrez_entr
 ```bash
 python3 server.py
 ```
-*Luego, abre tu navegador web y entra a: `http://localhost:8000`*
+*Luego, abre tu navegador web y entra a: `http://localhost:8080`*
 
 ### 2. Iniciar el Coach Virtual (Ollama)
 Si configuraste Ollama como servicio automático de sistema (`systemd`) con los permisos CORS, **no necesitas hacer nada**, arranca solo. 
@@ -61,5 +61,5 @@ OLLAMA_ORIGINS="*" ollama serve
 ## 🔒 Arquitectura y Privacidad
 Este proyecto está diseñado bajo una estricta filosofía de privacidad total:
 - **Sin Nube:** No hay llamadas a APIs externas (ni OpenAI, ni Google, ni Firebase).
-- **Sin Git:** Esta carpeta no está vinculada a ningún repositorio remoto (`.git` fue eliminado a propósito). No se subirá tu historial a internet.
+- **Git Centralizado:** El archivo `perfil_jugador.json` se versiona en Git para sincronizar tu progreso entre PC y netbook de forma privada y controlada.
 - **Frontend Puro:** No requiere instalación de paquetes `npm`, Node.js ni bases de datos SQL. Solo HTML, CSS y Vanilla JavaScript.

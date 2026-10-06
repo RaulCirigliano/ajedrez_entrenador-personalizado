@@ -10,16 +10,95 @@ import socketserver
 import webbrowser
 import os
 import sys
+import json
 
 PORT = 8080
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+PROFILE_FILE = os.path.join(DIRECTORY, 'perfil_jugador.json')
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
 
+    def end_headers(self):
+        # Desactivar cache para archivos JSON y endpoints de API
+        if self.path.endswith('.json') or self.path.startswith('/api/'):
+            self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        # Habilitar CORS para peticiones locales
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
+
+    def do_GET(self):
+        clean_path = self.path.split('?')[0]
+        if clean_path in ('/api/profile', '/api/get-profile'):
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json; charset=utf-8')
+            self.end_headers()
+            if os.path.exists(PROFILE_FILE):
+                with open(PROFILE_FILE, 'rb') as f:
+                    self.wfile.write(f.read())
+            else:
+                default_data = {
+                    "name": "Jugador",
+                    "elo": 1200,
+                    "gamesPlayed": 0,
+                    "wins": 0,
+                    "losses": 0,
+                    "draws": 0,
+                    "history": [],
+                    "openingStats": {},
+                    "practiceStats": {},
+                    "lastUpdated": ""
+                }
+                self.wfile.write(json.dumps(default_data, indent=2, ensure_ascii=False).encode('utf-8'))
+            return
+
+        super().do_GET()
+
+    def do_POST(self):
+        clean_path = self.path.split('?')[0]
+        if clean_path in ('/api/save-profile', '/api/profile', '/save-profile'):
+            try:
+                content_length = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data.decode('utf-8'))
+
+                # Guardar de forma segura en perfil_jugador.json
+                with open(PROFILE_FILE, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+
+                response_bytes = json.dumps({
+                    "status": "ok",
+                    "message": "Perfil guardado correctamente en perfil_jugador.json"
+                }).encode('utf-8')
+
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json; charset=utf-8')
+                self.send_header('Content-Length', str(len(response_bytes)))
+                self.end_headers()
+                self.wfile.write(response_bytes)
+            except Exception as e:
+                err_bytes = json.dumps({"status": "error", "message": str(e)}).encode('utf-8')
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json; charset=utf-8')
+                self.send_header('Content-Length', str(len(err_bytes)))
+                self.end_headers()
+                self.wfile.write(err_bytes)
+            return
+
+        self.send_response(404)
+        self.end_headers()
+
     def log_message(self, format, *args):
-        # Keep console output clean
+        # Mantener limpia la consola
         sys.stderr.write(f"[{self.log_date_time_string()}] {format % args}\n")
 
 def run():
@@ -35,10 +114,11 @@ def run():
                 print("=" * 60)
                 print(f" Servidor disponible en: {url}")
                 print(f" Carpeta del proyecto:   {DIRECTORY}")
+                print(f" Archivo de ELO y perfil: {PROFILE_FILE}")
                 print(" Presiona Ctrl+C para detener el servidor.")
                 print("=" * 60)
 
-                # Try opening browser if desktop environment available
+                # Intentar abrir el navegador
                 try:
                     webbrowser.open(url)
                 except Exception:
