@@ -1690,7 +1690,6 @@ const OPENINGS_DATA = [
         moves: "1.d4 d5 2.Bf4 c5 3.e3 Nc6 4.c3 Nf6 5.Nf3 Qb6 6.Qb3 c4 7.Qc2 Bf5 8.Qxf5 Qxb2 9.Kd1 Qxa1"
       }
     ]
-  }
   },
   {
     id: "destruye-hipopotamo",
