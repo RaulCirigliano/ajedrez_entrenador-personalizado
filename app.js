@@ -244,6 +244,11 @@ async function loadProfile() {
           shouldUseFile = true;
         }
 
+        // Evitar que el archivo por defecto de git sobreescriba un ELO local migrado
+        if (shouldUseFile && fileGames === 0 && (!fileData.history || fileData.history.length === 0) && localData && (localData.elo !== 1200 || localGames > 0)) {
+          shouldUseFile = false;
+        }
+
         if (shouldUseFile) {
           userProfile = Object.assign({}, userProfile, fileData);
           if (!userProfile.history) userProfile.history = [];
@@ -1613,6 +1618,15 @@ if (btnSaveProfile) {
   });
 
   // Initial Boot
+  if (window.location.protocol === 'file:') {
+    const warning = document.createElement('div');
+    warning.style = 'background: #ef4444; color: white; padding: 12px; text-align: center; font-weight: bold; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-size: 1.1rem;';
+    warning.innerHTML = '⚠️ ATENCIÓN: ESTÁS EJECUTANDO EL JUEGO SIN SERVIDOR LOCAL (file://) ⚠️<br><span style="font-size: 0.9rem; font-weight: normal;">Tu ELO y partidas <b>no se guardarán de forma permanente</b> en el archivo <code>perfil_jugador.json</code>.<br>Debes iniciar <code>python3 server.py</code> en tu terminal y abrir <b>http://localhost:8080</b> en tu navegador.</span>';
+    document.body.appendChild(warning);
+    // Push content down to avoid overlapping with the fixed banner
+    document.body.style.paddingTop = '60px';
+  }
+
   state.aiLevelId = parseInt(selectAiLevel.value, 10) || 3;
   loadProfile();
   populateOpenings();
